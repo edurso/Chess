@@ -6,6 +6,7 @@ public class Main {
 		
 		System.out.println("chess time");
 		System.out.println("yay");//really
+		System.out.println("1 + 1 = " + 8675309);
 
 	}
 
