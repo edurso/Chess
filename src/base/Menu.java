@@ -1,21 +1,19 @@
 package base;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import javax.swing.*;
 
 import chess.Game;
 import chess.GameStyle;
 
-import java.awt.Adjustable;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-public class Menu {
+import javax.swing.*
+;
+public class Menu extends JFrame{
 	
-	private JFrame mainFrame;
 	
 	private JButton quitButton;
 	private JButton singleButton;
@@ -35,10 +33,13 @@ public class Menu {
     JLabel background;
     
 	public void start() {
+		ImageIcon image = new ImageIcon("/Chess/src/sprites/chess background.png"); 
+		background = new JLabel("/Chess/src/sprites/chess background.png",image,JLabel.CENTER);
+		background.setBounds(0,0,1000,1204);
+		add(background);
+		background.setVisible(true);
 		
-		mainFrame = new JFrame();
-		
-		mainFrame.setTitle("Chess");
+		setTitle("Chess");
 		
 		//background
 		
@@ -59,14 +60,18 @@ public class Menu {
 	    initSingleplayerButtons();
 	    initMultiplayerButtons();
 	    
-	    mainFrame.getContentPane().add(menuPanel);
-	    mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    mainFrame.setSize(1000,1204);
-	    mainFrame.setResizable(false);
-	    mainFrame.setVisible(true);
+	    getContentPane().add(menuPanel);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setSize(1000,1204);
+	    setResizable(false);
+	    setVisible(true);
 	}
 	
 	private void initMainMenuButtons() {
+		
+		menuPanel.add(background);
+		background.setVisible(true);
+		
 		quitButton = new JButton("Quit");
 	    quitButton.setBounds(400,800,200,80);
 	    menuPanel.add(quitButton);
@@ -81,11 +86,11 @@ public class Menu {
 	    menuPanel.add(settingsButton);
 	    settingsButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.setVisible(false);
-				mainFrame.getContentPane().removeAll();
-				mainFrame.getContentPane().add(settingsPanel);
+				setVisible(false);
+				getContentPane().removeAll();
+				getContentPane().add(settingsPanel);
 				initSettingsButtons();
-			    mainFrame.setVisible(true);
+			    setVisible(true);
 			}
 		});
 	    
@@ -94,11 +99,11 @@ public class Menu {
 	    menuPanel.add(singleButton);
 	    singleButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.setVisible(false);
-			mainFrame.getContentPane().removeAll();
-			mainFrame.getContentPane().add(singlePanel);
+				setVisible(false);
+			getContentPane().removeAll();
+			getContentPane().add(singlePanel);
 			initSingleplayerButtons();
-		    mainFrame.setVisible(true);
+		    setVisible(true);
 			}
 		});
 	    
@@ -107,28 +112,32 @@ public class Menu {
 	    menuPanel.add(multiButton);
 	    multiButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.setVisible(false);
-				mainFrame.getContentPane().removeAll();
-				mainFrame.getContentPane().add(multiPanel);
+				setVisible(false);
+				getContentPane().removeAll();
+				getContentPane().add(multiPanel);
 				initMultiplayerButtons();
-			    mainFrame.setVisible(true);
+			    setVisible(true);
 			}
 		});
 	    
 	}
 	
 	private void initSettingsButtons() {
-		//TODO - Implement this soon.
+		settingsPanel.add(background);
+		background.setVisible(true);
+		//TODO - Implement  soon.
 		addBack(settingsPanel);
 	}
 	
 	private void initSingleplayerButtons() {
+		singlePanel.add(background);
+		background.setVisible(true);
 		easy = new JButton("Easy");
 		easy.setBounds(400,350,200,80);
 	    singlePanel.add(easy);
 	    easy.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.dispose();
+				dispose();
 				Game.run(GameStyle.SINGLE_EASY);
 			}
 		});
@@ -138,7 +147,7 @@ public class Menu {
 	    singlePanel.add(medium);
 	    medium.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.dispose();
+				dispose();
 				Game.run(GameStyle.SINGLE_MED); 
 			}
 		});
@@ -148,7 +157,7 @@ public class Menu {
 	    singlePanel.add(hard);
 	    hard.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.dispose();
+				dispose();
 				Game.run(GameStyle.SINGLE_HARD); 
 			}
 		});
@@ -157,12 +166,14 @@ public class Menu {
 	}
 	
 	private void initMultiplayerButtons() {
+		multiPanel.add(background);
+		background.setVisible(true);
 		local = new JButton("Local");
 		local.setBounds(400,500,200,80);
 	    multiPanel.add(local);
 	    local.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.dispose();
+				dispose();
 				Game.run(GameStyle.MULTI_LOCAL);
 			}
 		});
@@ -172,7 +183,7 @@ public class Menu {
 	    multiPanel.add(online);
 	    online.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.dispose();
+				dispose();
 				Game.run(GameStyle.MULTI_ONLINE);
 			}
 		});
@@ -186,13 +197,14 @@ public class Menu {
 	    panel.add(back);
 	    back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-			    mainFrame.setVisible(false);
-				mainFrame.getContentPane().removeAll();
-				mainFrame.getContentPane().add(menuPanel);
+			    setVisible(false);
+				getContentPane().removeAll();
+				getContentPane().add(menuPanel);
 				initMainMenuButtons();
-			    mainFrame.setVisible(true);
+			    setVisible(true);
 			}
 		});
 	}
 
 }
+
