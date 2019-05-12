@@ -14,7 +14,7 @@ import javax.swing.*
 ;
 public class Menu extends JFrame{
 	
-	
+	private static final long serialVersionUID = 1L;
 	private JButton quitButton;
 	private JButton singleButton;
 	private JButton multiButton;
@@ -33,8 +33,8 @@ public class Menu extends JFrame{
     JLabel background;
     
 	public void start() {
-		ImageIcon image = new ImageIcon("/Chess/src/sprites/chess background.png"); 
-		background = new JLabel("/Chess/src/sprites/chess background.png",image,JLabel.CENTER);
+		ImageIcon image = new ImageIcon("/Chess/src/sprites/chess_background.png"); 
+		background = new JLabel("/Chess/src/sprites/chess_background.png", image, JLabel.CENTER);
 		background.setBounds(0,0,1000,1204);
 		add(background);
 		background.setVisible(true);
@@ -125,7 +125,7 @@ public class Menu extends JFrame{
 	private void initSettingsButtons() {
 		settingsPanel.add(background);
 		background.setVisible(true);
-		//TODO - Implement  soon.
+		//TODO - Implement
 		addBack(settingsPanel);
 	}
 	
