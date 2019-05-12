@@ -10,28 +10,94 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.*
-;
+import javax.swing.*;
+
+/**
+ * This is the main menu that pops up when the application is launched.
+ * @author edurso
+ */
 public class Menu extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Button that will exit the application
+	 */
 	private JButton quitButton;
+	
+	/**
+	 * Button that launches the selection menu for single player options
+	 */
 	private JButton singleButton;
+	
+	/**
+	 * Button that launches the selection menu for multiplayer options
+	 */
 	private JButton multiButton;
+	
+	/**
+	 * Button that launches the selection menu for the player's setings
+	 */
 	private JButton settingsButton;
+	
+	/**
+	 * Button that redirects to main menu
+	 */
 	private JButton back;
 	
-	private JButton easy, medium, hard;
-	private JButton local, online;
+	/**
+	 * Button that launches an easy single player game
+	 */
+	private JButton easy;
 	
+	/**
+	 * Button that launches a medium single player game
+	 */
+	private JButton medium;
+	
+	/**
+	 * Button that launches a hard single player game
+	 */
+	private JButton hard;
+	
+	/**
+	 * Button that launches a local multiplayer game
+	 */
+	private JButton local;
+	
+	/**
+	 * Button that launches an online multiplayer game
+	 */
+	private JButton online;
+	
+	/**
+	 * Container for main menu buttons
+	 */
 	private JPanel menuPanel;
+	
+	/**
+	 * Container for single player buttons
+	 */
     private JPanel singlePanel;
+    
+    /**
+     * Container for multiplayer buttons
+     */
     private JPanel multiPanel;
+    
+    /**
+     * Container for settings components
+     */
     private JPanel settingsPanel;
 	
-    private JScrollBar volumeScroll;
-    JLabel background;
+    /**
+     * Image for the background of the menu
+     */
+    private JLabel background;
     
+    /**
+     * Starts the menu at the main screen of the application
+     */
 	public void start() {
 		ImageIcon image = new ImageIcon("/Chess/src/sprites/chess_background.png"); 
 		background = new JLabel("/Chess/src/sprites/chess_background.png", image, JLabel.CENTER);
@@ -67,6 +133,9 @@ public class Menu extends JFrame{
 	    setVisible(true);
 	}
 	
+	/**
+	 * Configures the components for the main menu
+	 */
 	private void initMainMenuButtons() {
 		
 		menuPanel.add(background);
@@ -122,6 +191,9 @@ public class Menu extends JFrame{
 	    
 	}
 	
+	/**
+	 * Configures the components for the settings menu
+	 */
 	private void initSettingsButtons() {
 		settingsPanel.add(background);
 		background.setVisible(true);
@@ -129,6 +201,9 @@ public class Menu extends JFrame{
 		addBack(settingsPanel);
 	}
 	
+	/**
+	 * Configures the components for the single player menu
+	 */
 	private void initSingleplayerButtons() {
 		singlePanel.add(background);
 		background.setVisible(true);
@@ -165,6 +240,9 @@ public class Menu extends JFrame{
 	    addBack(singlePanel);
 	}
 	
+	/**
+	 * Configures the components for the multiplayer menu
+	 */
 	private void initMultiplayerButtons() {
 		multiPanel.add(background);
 		background.setVisible(true);
@@ -191,6 +269,10 @@ public class Menu extends JFrame{
 	    addBack(multiPanel);
 	}
 	
+	/**
+	 * Adds a "go home" button to the inputed panel.
+	 * @param panel the panel the home button will be added to
+	 */
 	private void addBack(JPanel panel) {
 		back = new JButton("Go To Home");
 	    back.setBounds(400,800,200,80);
