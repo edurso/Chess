@@ -16,6 +16,8 @@ import chess.Game;
 
 public class Player implements Serializable{
 	
+	private static final String fname = "chessgamedata.dat";
+	
 	private static final long serialVersionUID = 1L;
 
 	private String username = "User";
@@ -50,7 +52,7 @@ public class Player implements Serializable{
 		File inputFile = null;
 		File outputFile = null;
 		try {
-			inputFile = new File(System.getProperty("user.dir") + File.separator + "chessgamedata.dat");
+			inputFile = new File(System.getProperty("user.dir") + File.separator + fname);
 			outputFile = new File(System.getProperty("user.dir") + File.separator + "tempfile.dat");
 		} catch (SecurityException e) {
 			JOptionPane.showMessageDialog(null, "Read-Write Permission Denied !! Program Cannot Start");
@@ -80,7 +82,7 @@ public class Player implements Serializable{
 			}
 			inputFile.delete();
 			output.close();
-			File newf = new File(System.getProperty("user.dir")+ File.separator + "chessgamedata.dat");
+			File newf = new File(System.getProperty("user.dir")+ File.separator + fname);
 			if(outputFile.renameTo(newf)==false) System.out.println("File Renameing Unsuccessful");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -98,7 +100,7 @@ public class Player implements Serializable{
 		ObjectInputStream input = null;
 		ArrayList<Player> players = new ArrayList<Player>();
 		try {
-			File infile = new File(System.getProperty("user.dir")+ File.separator + "chessgamedata.dat");
+			File infile = new File(System.getProperty("user.dir")+ File.separator + fname);
 			input = new ObjectInputStream(new FileInputStream(infile));
 			try {
 				while(true) {
