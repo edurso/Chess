@@ -19,6 +19,8 @@ public class Game {
 	private static JButton errorButton;
 	private static Menu m;
 	
+	private static Board mainBoard;
+	
 	public static void run(GameStyle style) {
 		
 		initErrorWindow();
@@ -34,7 +36,8 @@ public class Game {
 				
 				break;
 			case MULTI_LOCAL:
-				
+				mainBoard = new Board(Menu.getActiveWhitePlayer(), Menu.getActiveBlackPlayer());
+				mainBoard.play();
 				break;
 			case MULTI_ONLINE:
 				errorFrame.setVisible(true);
@@ -45,7 +48,7 @@ public class Game {
 		}
 	}
 	
-	public static void error() { errorFrame.setVisible(true); }
+	public static void revealErrorWindow() { errorFrame.setVisible(true); }
 	
 	public static void killErrorWindow() { errorFrame.dispose(); }
 	
@@ -54,13 +57,12 @@ public class Game {
 		errorFrame.setVisible(false);
 		errorPanel = new JPanel();
 		errorFrame.setTitle("Unexpected Error Encountered");
-		errorFrame.setBounds(0, 0, 500, 250);
+		errorFrame.setBounds(500, 500, 500, 250);
 		errorText = new JTextField();
 		errorText.setText("An Unexpected Error Has Occured. We Reccomend Restarting the Application");
 		errorText.setEditable(false);
 		m = new Menu();
 		errorButton = new JButton("Restart");
-		//errorButton.setBounds(400,800,200,80);
 	    errorPanel.add(errorButton);
 	    errorButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -71,5 +73,7 @@ public class Game {
 		errorPanel.add(errorText);
 		errorFrame.add(errorPanel);
 	}
+	
+	public static void setErrorText(String msg) { errorText.setText(msg); }
 	
 }
