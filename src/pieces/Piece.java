@@ -79,7 +79,7 @@ public abstract class Piece implements Cloneable{
 	public void setId(String id) { this.id = id; }
 
 	/**
-	 * @return the path tho the graphic for the game piece
+	 * @return the path the the graphic for the game piece
 	 */
 	public String getPath() { return path; }
 

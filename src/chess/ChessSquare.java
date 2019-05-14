@@ -45,7 +45,7 @@ public class ChessSquare extends JPanel implements Cloneable{
 	private boolean isSelected = false;
 	
 	/**
-	 * if the square contains a king in check or a piece that is puting the king in check
+	 * if the square contains a king in check or a piece that is putting the king in check
 	 */
 	private boolean isCheck = false;
 	
@@ -61,8 +61,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 		
 		setLayout(new BorderLayout());
 	
-		if((x + y) % 2 == 0) setBackground(new Color(140, 0, 140));
-		else setBackground(Color.white);
+		if((x + y) % 2 == 0) setBackground(Color.white);
+		else setBackground(Color.PINK);
 	 
 		if(p != null) setPiece(p);
 	}

@@ -19,6 +19,8 @@ public class Game {
 	private static JButton errorButton;
 	private static Menu m;
 	
+	private static Board mainBoard;
+	
 	public static void run(GameStyle style) {
 		
 		initErrorWindow();
@@ -34,7 +36,8 @@ public class Game {
 				
 				break;
 			case MULTI_LOCAL:
-				
+				mainBoard = new Board(Menu.getActiveWhitePlayer(), Menu.getActiveBlackPlayer());
+				mainBoard.play();
 				break;
 			case MULTI_ONLINE:
 				errorFrame.setVisible(true);
