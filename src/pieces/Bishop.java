@@ -17,6 +17,7 @@ public class Bishop extends Piece {
 	 * @param color color for the Bishop
 	 */
 	public Bishop(String id, String path, int color) {
+		//super(path);
 		this.setId(id);
 		this.setPath(path);
 		this.setColor(color);

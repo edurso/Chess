@@ -2,13 +2,16 @@ package pieces;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import chess.ChessSquare;
 
 /**
  * Piece class serves as super class for all game pieces
  * @author edurso
  */
-public abstract class Piece implements Cloneable{
+public abstract class Piece extends JLabel implements Cloneable{
 	
 	/**
 	 * white game piece color
@@ -39,6 +42,15 @@ public abstract class Piece implements Cloneable{
 	 * list of possible moves the piece can make
 	 */
 	ArrayList<ChessSquare> possibleMoves = new ArrayList<>();
+	
+//	protected Piece (String path) {
+//		ImageIcon icon = new ImageIcon("src/sprites/" + path);
+//		this.setIcon(icon);
+//	}
+//	
+//	public void setPieceVisible() { this.setVisible(true); }
+//	
+//	public void setPieceInvisible() { this.setVisible(false); }
 	
 	/**
 	 * updates the list of moves the piece can make

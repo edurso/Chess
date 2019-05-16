@@ -116,6 +116,16 @@ public class ChessSquare extends JPanel implements Cloneable{
 		}
 	}
 	
+	public void showContent() {
+		content.setVisible(true);
+		this.setVisible(true);
+	}
+	
+	public void hideContent() {
+		content.setVisible(true);
+		this.setVisible(true);
+	}
+	
 	/**
 	 * selcets the square
 	 */

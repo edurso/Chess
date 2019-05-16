@@ -34,6 +34,7 @@ public class King extends Piece {
 	 * @param y     king Y position
 	 */
 	public King(String id, String path, int color, int x, int y) {
+		//super(path);
 		setX(x);
 		setY(y);
 		setId(id);
