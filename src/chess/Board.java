@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import base.Menu;
@@ -146,7 +147,16 @@ public class Board extends JFrame implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		JFrame jf = new JFrame();
+		JLabel jl = new JLabel();
+		jf.setTitle("Hello There");
+		jf.setBounds(100, 100, 100, 100);
+		jl.setText("     YOU BROKE IT");
+		jf.add(jl);
+		jl.setBounds(200, 200, 100, 100);
+		jl.setVisible(true);
+		jf.setVisible(true);
+		this.dispose();
 	}
 
 	@Override
