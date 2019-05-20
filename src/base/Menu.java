@@ -100,11 +100,7 @@ public class Menu extends JFrame{
      * Starts the menu at the main screen of the application
      */
 	public void start() {
-		ImageIcon image = new ImageIcon("/Chess/src/sprites/chess_background.png"); 
-		background = new JLabel("/Chess/src/sprites/chess_background.png", image, JLabel.CENTER);
-		background.setBounds(0,0,1000,1204);
-		add(background);
-		background.setVisible(true);
+		
 		
 		setTitle("Chess");
 		
@@ -122,12 +118,20 @@ public class Menu extends JFrame{
 	    settingsPanel = new JPanel();
 	    settingsPanel.setLayout(null);
 	    
-	    initMainMenuButtons();
-	    initSettingsButtons();
-	    initSingleplayerButtons();
-	    initMultiplayerButtons();
+	    //initMainMenuButtons();
+	    //initSettingsButtons();
+	    //initSingleplayerButtons();
+	    //initMultiplayerButtons();
 	    
 	    getContentPane().add(menuPanel);
+	    ImageIcon image = new ImageIcon(getClass().getResource("chess_background.png")); 
+		background = new JLabel(image, JLabel.CENTER);
+		background.setBounds(0,0,1000,1204);
+
+	    initMainMenuButtons();
+	    
+		//add(background);
+		//background.setVisible(true);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setSize(1000,1204);
 	    setResizable(false);
@@ -155,8 +159,7 @@ public class Menu extends JFrame{
 	 */
 	private void initMainMenuButtons() {
 		
-		menuPanel.add(background);
-		background.setVisible(true);
+	
 		
 		quitButton = new JButton("Quit");
 	    quitButton.setBounds(400,800,200,80);
@@ -206,15 +209,21 @@ public class Menu extends JFrame{
 			}
 		});
 	    
+		menuPanel.add(background);
+		background.setVisible(true);
+		
 	}
 	
 	/**
 	 * Configures the components for the settings menu
 	 */
 	private void initSettingsButtons() {
+		
+		//TODO - Implement
+		
 		settingsPanel.add(background);
 		background.setVisible(true);
-		//TODO - Implement
+		
 		addBack(settingsPanel);
 	}
 	
@@ -222,8 +231,7 @@ public class Menu extends JFrame{
 	 * Configures the components for the single player menu
 	 */
 	private void initSingleplayerButtons() {
-		singlePanel.add(background);
-		background.setVisible(true);
+		
 		easy = new JButton("Easy");
 		easy.setBounds(400,350,200,80);
 	    singlePanel.add(easy);
@@ -253,16 +261,16 @@ public class Menu extends JFrame{
 				Game.run(GameStyle.SINGLE_HARD); 
 			}
 		});
-	    
 	    addBack(singlePanel);
+	    singlePanel.add(background);
+		background.setVisible(true);
 	}
 	
 	/**
 	 * Configures the components for the multiplayer menu
 	 */
 	private void initMultiplayerButtons() {
-		multiPanel.add(background);
-		background.setVisible(true);
+		
 		local = new JButton("Local");
 		local.setBounds(400,500,200,80);
 	    multiPanel.add(local);
@@ -282,8 +290,9 @@ public class Menu extends JFrame{
 				Game.run(GameStyle.MULTI_ONLINE);
 			}
 		});
-	    
 	    addBack(multiPanel);
+	    multiPanel.add(background);
+		background.setVisible(true);
 	}
 	
 	/**

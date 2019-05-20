@@ -65,6 +65,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 		else setBackground(Color.PINK);
 	 
 		if(p != null) setPiece(p);
+		//else setBackground(Color.BLACK);
+		
 	}
 	
 	/**
@@ -93,9 +95,10 @@ public class ChessSquare extends JPanel implements Cloneable{
 		//set piece
 		this.piece = piece;
 		//change label
-		ImageIcon img = new ImageIcon(piece.getPath());
+		ImageIcon img = new ImageIcon(getClass().getResource(piece.getPath()));
 		content = new JLabel(img);
 		this.add(content);
+		content.paint(null);
 	}
 	
 	/** 
