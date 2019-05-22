@@ -5,7 +5,10 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ListIterator;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -44,7 +47,8 @@ public class Board extends JFrame implements MouseListener{
 	
 	private static final String WHITE_MOVE = "WHITE";
 	private static final String BLACK_MOVE = "BLACK";
-	static String Move = WHITE_MOVE;
+
+	static String move = WHITE_MOVE;
 	
 	private Player whitePlayer = null;
 	private Player blackPlayer = null;
@@ -54,8 +58,24 @@ public class Board extends JFrame implements MouseListener{
 	private JPanel optionPanel;
 	
 	private ChessSquare cs;
+
+	private ChessSquare c;
+
+	private ChessSquare previous;
+
+	private int chance;
+
+	private ArrayList<ChessSquare> destinList;
+
+	private boolean end;
 	
 	public Board(Player whitePlayer, Player blackPlayer) {
+
+		chance = 0;
+
+		end = false;//true if game has ended
+
+		destinList = new ArrayList<>();
 		
 		wr01 = new Castle("WR01", "whiteRook.png", Piece.COLOR_WHITE); 
 		wr02 = new Castle("WR02", "whiteRook.png", Piece.COLOR_WHITE);
@@ -117,7 +137,7 @@ public class Board extends JFrame implements MouseListener{
 				
 				cs = new ChessSquare(i, j, P);
 				cs.addMouseListener(this);
-				board.add(cs);//https://stackoverflow.com/questions/47879323/how-do-i-get-coordinates-of-a-jpanel-in-an-8x8-gridlayout
+				board.add(cs);
 				boardState[i][j] = cs;
 			}
 		}
@@ -126,9 +146,8 @@ public class Board extends JFrame implements MouseListener{
 		setSize(1200, 825);
 		setResizable(false);
 		add(board);
-		add(optionPanel);
 		board.setBounds(0, 0, 800, 800);
-		
+		add(optionPanel);
 		optionPanel.setBounds(800, 0, 400, 825);
 		
 	}
@@ -147,17 +166,229 @@ public class Board extends JFrame implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		JFrame jf = new JFrame();
-		JLabel jl = new JLabel();
-		jf.setTitle("Hello There");
-		jf.setBounds(100, 100, 100, 100);
-		jl.setText("     YOU BROKE IT");
-		jf.add(jl);
-		jl.setBounds(200, 200, 100, 100);
-		jl.setVisible(true);
-		jf.setVisible(true);
-		this.dispose();
+
+		c = (ChessSquare) e.getSource();
+		if (previous == null) {//if this is the first piece we are selecting . . . 
+			if(c.getPiece() != null) {
+				if(c.getPiece().getColor() != chance) return;
+				c.select();
+				previous = c;
+				destinList.clear();
+				destinList = c.getPiece().move(boardState, c.x, c.y);
+				if(c.getPiece() instanceof King) destinList = filterdestination(destinList, c);
+				else {
+					if(boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) destinList = new ArrayList<ChessSquare>(filterdestination(destinList,c));
+					else if(destinList.isEmpty()==false && willkingbeindanger(c,destinList.get(0))) destinList.clear();
+				}
+				highlightdestinations(destinList);
+			}
+		} else {
+			if(c.x == previous.x && c.y == previous.y) {
+				c.deselect();
+				cleandestinations(destinList);
+				destinList.clear();
+				previous = null;
+			} else if(c.getPiece()==null||previous.getPiece().getColor()!=c.getPiece().getColor()) {
+				if(c.isPossibleDestination()) {
+					if(c.getPiece() != null) c.removePiece();
+					c.setPiece(previous.getPiece());
+					if (previous.isCheck()) previous.removeCheck();
+					previous.removePiece();
+					if(getKing(chance^1).threatExists(boardState)) {
+						boardState[getKing(chance^1).getX()][getKing(chance^1).getY()].setCheck();
+						if (checkmate(getKing(chance^1).getColor())) {
+							previous.deselect();
+							if(previous.getPiece()!=null)
+								previous.removePiece();
+							gameEnd();
+						}
+					}
+					if(getKing(chance).threatExists(boardState)==false) boardState[getKing(chance).getX()][getKing(chance).getY()].removeCheck();
+					if(c.getPiece() instanceof King) {
+						((King)c.getPiece()).setX(c.x);
+						((King)c.getPiece()).setY(c.y);
+					}
+					changechance();
+					if(!end) {
+						//restart timer
+					}
+				}
+				if(previous != null) {
+					previous.deselect();
+					previous=null;
+				}
+				cleandestinations(destinList);
+				destinList.clear();
+			} else if(previous.getPiece().getColor()==c.getPiece().getColor()) {
+				previous.deselect();
+				cleandestinations(destinList);
+				destinList.clear();
+				c.select();
+				previous=c;
+				destinList=c.getPiece().move(boardState, c.x, c.y);
+				if(c.getPiece() instanceof King)
+					destinList=filterdestination(destinList,c);
+				else
+				{
+					if(boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck())
+						destinList = new ArrayList<ChessSquare>(filterdestination(destinList,c));
+					else if(destinList.isEmpty()==false && willkingbeindanger(c,destinList.get(0)))
+						destinList.clear();
+				}
+				highlightdestinations(destinList);
+			}
+		}
+		if(c.getPiece() != null && c.getPiece() instanceof King) {
+			((King)c.getPiece()).setX(c.x);
+			((King)c.getPiece()).setY(c.y);
+		}
+
+		// JFrame jf = new JFrame();
+		// JLabel jl = new JLabel();
+		// jf.setTitle("Hello There");
+		// jf.setBounds(100, 100, 100, 100);
+		// jl.setText("     YOU BROKE IT");
+		// jf.add(jl);
+		// jl.setBounds(200, 200, 100, 100);
+		// jl.setVisible(true);
+		// jf.setVisible(true);
+		// this.dispose();
 	}
+
+	public void changechance() {
+		if (boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) {
+			chance ^= 1;
+			gameEnd();
+		}
+		if(destinList.isEmpty() == false) cleandestinations(destinList);
+		if(previous != null) previous.deselect();
+		previous = null;
+		chance ^= 1;
+		if(!end /*&& timer != null*/){
+			//reset timer
+			//showPlayer.remove(CHNC);
+			if(Board.move == Board.WHITE_MOVE) Board.move = Board.BLACK_MOVE;
+			else Board.move = Board.WHITE_MOVE;
+			//CHNC.setText(Main.move);
+			//showPlayer.add(CHNC);
+		}
+	}
+
+	private ArrayList<ChessSquare> filterdestination (ArrayList<ChessSquare> destlist, ChessSquare fromSquare)
+    {
+    	ArrayList<ChessSquare> newlist = new ArrayList<ChessSquare>();
+    	ChessSquare newboardstate[][] = new ChessSquare[8][8];
+    	ListIterator<ChessSquare> it = destlist.listIterator();
+    	int x,y;
+    	while (it.hasNext())
+    	{
+    		for(int i=0;i<8;i++)
+        		for(int j=0;j<8;j++)
+        		{	try { newboardstate[i][j] = new ChessSquare(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace();}}
+    		
+    		ChessSquare tempc = it.next();
+    		if(newboardstate[tempc.x][tempc.y].getPiece()!=null)
+    			newboardstate[tempc.x][tempc.y].removePiece();
+    		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromSquare.x][fromSquare.y].getPiece());
+    		x=getKing(chance).getX();
+    		y=getKing(chance).getY();
+    		if(newboardstate[fromSquare.x][fromSquare.y].getPiece() instanceof King)
+    		{
+    			((King)(newboardstate[tempc.x][tempc.y].getPiece())).setX(tempc.x);
+    			((King)(newboardstate[tempc.x][tempc.y].getPiece())).setY(tempc.y);
+    			x = tempc.x;
+    			y = tempc.y;
+    		}
+    		newboardstate[fromSquare.x][fromSquare.y].removePiece();
+    		if ((((King)(newboardstate[x][y].getPiece())).threatExists(newboardstate)==false)) newlist.add(tempc);
+    	}
+    	return newlist;
+    }
+
+	private boolean willkingbeindanger(ChessSquare fromSquare, ChessSquare toSquare) {
+    	ChessSquare[][] newboardstate = new ChessSquare[8][8];
+    	for(int i=0;i<8;i++)
+    		for(int j=0;j<8;j++)
+    		{	try { newboardstate[i][j] = new ChessSquare(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace(); System.out.println("There is a problem with cloning !!"); }}
+    	
+    	if(newboardstate[fromSquare.x][fromSquare.y].getPiece()!=null)
+			newboardstate[fromSquare.x][fromSquare.y].removePiece();
+    	
+		newboardstate[toSquare.x][toSquare.y].setPiece(newboardstate[fromSquare.x][fromSquare.y].getPiece());
+		if(newboardstate[toSquare.x][toSquare.y].getPiece() instanceof King)
+		{
+			((King)(newboardstate[toSquare.x][toSquare.y].getPiece())).setX(toSquare.x);
+			((King)(newboardstate[toSquare.x][toSquare.y].getPiece())).setY(fromSquare.y);
+		}
+		newboardstate[fromSquare.x][fromSquare.y].removePiece();
+		if (((King)(newboardstate[getKing(chance).getX()][getKing(chance).getY()].getPiece())).threatExists(newboardstate)==true)
+			return true;
+		else
+			return false;
+    }
+
+	private void cleandestinations(ArrayList<ChessSquare> destlist) {
+    	ListIterator<ChessSquare> it = destlist.listIterator();
+    	while(it.hasNext()) it.next().setImpossibleDestination();
+	} 
+	
+    private void highlightdestinations(ArrayList<ChessSquare> destlist) {
+    	ListIterator<ChessSquare> it = destlist.listIterator();
+    	while(it.hasNext()) it.next().setPossibleDestination();
+    }
+
+	private ArrayList<ChessSquare> incheckfilter (ArrayList<ChessSquare> destList, ChessSquare fromSquare, int color) {
+    	ArrayList<ChessSquare> newList = new ArrayList<>();
+    	ChessSquare[][] newboardstate = new ChessSquare[8][8];
+    	ListIterator<ChessSquare> it = destList.listIterator();
+    	int x,y;
+    	while (it.hasNext()) {
+    		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {try { newboardstate[i][j] = new ChessSquare(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace();}}
+			ChessSquare tempc = it.next();
+    		if(newboardstate[tempc.x][tempc.y].getPiece() != null) newboardstate[tempc.x][tempc.y].removePiece();
+    		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromSquare.x][fromSquare.y].getPiece());
+    		x = getKing(color).getX();
+    		y = getKing(color).getY();
+    		if(newboardstate[tempc.x][tempc.y].getPiece() instanceof King) {
+    			((King)(newboardstate[tempc.x][tempc.y].getPiece())).setX(tempc.x);
+    			((King)(newboardstate[tempc.x][tempc.y].getPiece())).setY(tempc.y);
+    			x=tempc.x;
+    			y=tempc.y;
+    		}
+    		newboardstate[fromSquare.x][fromSquare.y].removePiece();
+    		if ((((King)(newboardstate[x][y].getPiece())).threatExists(newboardstate) == false)) newList.add(tempc);
+    	}
+    	return newList;
+    }
+
+	public boolean checkmate(int color) {
+    	ArrayList<ChessSquare> dlist = new ArrayList<>();
+    	for(int i=0;i<8;i++) {
+    		for(int j=0;j<8;j++) {
+    			if (boardState[i][j].getPiece() != null && boardState[i][j].getPiece().getColor() == color) {
+    				dlist.clear();
+    				dlist = boardState[i][j].getPiece().move(boardState, i, j);
+    				dlist = incheckfilter(dlist,boardState[i][j],color);
+    				if(dlist.size()!=0) return false;
+    			}
+    		}
+    	}
+    	return true;
+    }
+
+	private void gameEnd() {
+    	cleandestinations(destinList);
+    	if(previous != null) previous.removePiece();
+    	if(chance == Piece.COLOR_WHITE) {	
+			//update white player stats, set winner
+		} else {
+			//update black player stats, set winner
+		}
+		end = true;
+		//show winner
+		//dispose this
+		dispose();
+    }
 
 	@Override
 	public void mousePressed(MouseEvent e) {

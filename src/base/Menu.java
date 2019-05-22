@@ -96,6 +96,8 @@ public class Menu extends JFrame{
      */
     private JLabel background;
     
+    private static Font f = new Font("TimesRoman", Font.PLAIN, 20);
+    
     /**
      * Starts the menu at the main screen of the application
      */
@@ -163,6 +165,8 @@ public class Menu extends JFrame{
 		
 		quitButton = new JButton("Quit");
 	    quitButton.setBounds(400,800,200,80);
+	    quitButton.setBackground(Color.RED);
+	    quitButton.setFont(f);
 	    menuPanel.add(quitButton);
 	    quitButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +176,8 @@ public class Menu extends JFrame{
 	    
 	    settingsButton = new JButton("Settings");
 	    settingsButton.setBounds(400,650,200,80);
+	    settingsButton.setBackground(Color.RED);
+	    settingsButton.setFont(f);
 	    menuPanel.add(settingsButton);
 	    settingsButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -185,6 +191,8 @@ public class Menu extends JFrame{
 	    
 	    singleButton = new JButton("Single Player");
 	    singleButton.setBounds(400,350,200,80);
+	    singleButton.setBackground(Color.RED);
+	    singleButton.setFont(f);
 	    menuPanel.add(singleButton);
 	    singleButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -198,6 +206,8 @@ public class Menu extends JFrame{
 	    
 	    multiButton = new JButton("Multiplayer");
 	    multiButton.setBounds(400,500,200,80);
+	    multiButton.setBackground(Color.RED);
+	    multiButton.setFont(f);
 	    menuPanel.add(multiButton);
 	    multiButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -234,6 +244,8 @@ public class Menu extends JFrame{
 		
 		easy = new JButton("Easy");
 		easy.setBounds(400,350,200,80);
+	    easy.setBackground(Color.RED);
+	    easy.setFont(f);
 	    singlePanel.add(easy);
 	    easy.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -244,6 +256,8 @@ public class Menu extends JFrame{
 	    
 	    medium = new JButton("Medium");
 	    medium.setBounds(400,500,200,80);
+	    medium.setBackground(Color.RED);
+	    medium.setFont(f);
 	    singlePanel.add(medium);
 	    medium.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -254,6 +268,8 @@ public class Menu extends JFrame{
 	    
 	    hard = new JButton("Hard");
 	    hard.setBounds(400,650,200,80);
+	    hard.setBackground(Color.RED);
+	    hard.setFont(f);
 	    singlePanel.add(hard);
 	    hard.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -273,6 +289,8 @@ public class Menu extends JFrame{
 		
 		local = new JButton("Local");
 		local.setBounds(400,500,200,80);
+	    local.setBackground(Color.RED);
+	    local.setFont(f);
 	    multiPanel.add(local);
 	    local.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -283,6 +301,8 @@ public class Menu extends JFrame{
 	    
 	    online = new JButton("Online");
 	    online.setBounds(400,650,200,80);
+	    online.setBackground(Color.RED);
+	    online.setFont(f);
 	    multiPanel.add(online);
 	    online.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -302,6 +322,8 @@ public class Menu extends JFrame{
 	private void addBack(JPanel panel) {
 		back = new JButton("Go To Home");
 	    back.setBounds(400,800,200,80);
+	    back.setBackground(Color.RED);
+	    back.setFont(f);
 	    panel.add(back);
 	    back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
