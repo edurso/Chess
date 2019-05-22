@@ -297,10 +297,10 @@ public class Board extends JFrame implements MouseListener{
     	ChessSquare[][] newboardstate = new ChessSquare[8][8];
     	for(int i=0;i<8;i++)
     		for(int j=0;j<8;j++)
-    		{	try { newboardstate[i][j] = new ChessSquare(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace(); System.out.println("There is a problem with cloning !!"); }}
+    		{	try { newboardstate[i][j] = new ChessSquare(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace(); System.out.println("There is a problem with cloning"); }}
     	
-    	if(newboardstate[fromSquare.x][fromSquare.y].getPiece()!=null)
-			newboardstate[fromSquare.x][fromSquare.y].removePiece();
+    	// if(newboardstate[fromSquare.x][fromSquare.y].getPiece()!=null)
+		// 	newboardstate[fromSquare.x][fromSquare.y].removePiece();
     	
 		newboardstate[toSquare.x][toSquare.y].setPiece(newboardstate[fromSquare.x][fromSquare.y].getPiece());
 		if(newboardstate[toSquare.x][toSquare.y].getPiece() instanceof King)

@@ -95,7 +95,7 @@ public abstract class Piece extends JLabel implements Cloneable{
 	 */
 	public String getPath() { 
 		if(path != null) return path; 
-		return "";
+		return "whitePawn.png";
 	}
 
 	/**

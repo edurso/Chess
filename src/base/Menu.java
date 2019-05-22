@@ -136,7 +136,7 @@ public class Menu extends JFrame{
 		//background.setVisible(true);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setSize(1000,1204);
-	    setResizable(false);
+	    //setResizable(false);
 	    setVisible(true);
 	}
 	

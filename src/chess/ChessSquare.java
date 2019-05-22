@@ -95,8 +95,9 @@ public class ChessSquare extends JPanel implements Cloneable{
 		//set piece
 		this.piece = piece;
 		//change label
+		//ImageIcon img = new ImageIcon(getClass().getResource("whitePawn.png"));
 		ImageIcon img = new ImageIcon(getClass().getResource(piece.getPath()));
-		//if(piece.getPath() != null) img = new ImageIcon(getClass().getResource(piece.getPath()));
+		if(piece.getPath() != null) img = new ImageIcon(getClass().getResource(piece.getPath()));
 		content = new JLabel(img);
 		this.add(content);
 		content.paint(null);
