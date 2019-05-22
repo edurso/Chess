@@ -128,10 +128,10 @@ public class Board extends JFrame implements MouseListener{
 				else if(i == 0 && j == 5)  P = bb02;
 				else if(i == 7 && j == 2)  P = wb01;
 				else if(i == 7 && j == 5)  P = wb02;
-				else if(i == 0 && j == 3)  P = bq;
-				else if(i == 0 && j == 4)  P = bk;
-				else if(i == 7 && j == 3)  P = wq;
-				else if(i == 7 && j == 4)  P = wk;
+				else if(i == 0 && j == 3)  P = bk;
+				else if(i == 0 && j == 4)  P = bq;
+				else if(i == 7 && j == 3)  P = wk;
+				else if(i == 7 && j == 4)  P = wq;
 				else if(i == 1)            P = bp[j];
 				else if(i == 6)            P = wp[j];
 				
@@ -155,7 +155,6 @@ public class Board extends JFrame implements MouseListener{
 	public void play() {
 		setVisible(true);
 		//System.out.println("Piece at 0, 0 is ... " + boardState[0][0].getPiece().getPath());//just for testing
-		//TODO - help
 	}
 	
 	public King getKing(int color) {
@@ -178,7 +177,7 @@ public class Board extends JFrame implements MouseListener{
 				if(c.getPiece() instanceof King) destinList = filterdestination(destinList, c);
 				else {
 					if(boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) destinList = new ArrayList<ChessSquare>(filterdestination(destinList,c));
-					else if(destinList.isEmpty()==false && willkingbeindanger(c,destinList.get(0))) destinList.clear();
+					else if(destinList.isEmpty() == false && willkingbeindanger(c, destinList.get(0))) destinList.clear();
 				}
 				highlightdestinations(destinList);
 			}
@@ -242,17 +241,6 @@ public class Board extends JFrame implements MouseListener{
 			((King)c.getPiece()).setX(c.x);
 			((King)c.getPiece()).setY(c.y);
 		}
-
-		// JFrame jf = new JFrame();
-		// JLabel jl = new JLabel();
-		// jf.setTitle("Hello There");
-		// jf.setBounds(100, 100, 100, 100);
-		// jl.setText("     YOU BROKE IT");
-		// jf.add(jl);
-		// jl.setBounds(200, 200, 100, 100);
-		// jl.setVisible(true);
-		// jf.setVisible(true);
-		// this.dispose();
 	}
 
 	public void changechance() {
@@ -321,10 +309,9 @@ public class Board extends JFrame implements MouseListener{
 			((King)(newboardstate[toSquare.x][toSquare.y].getPiece())).setY(fromSquare.y);
 		}
 		newboardstate[fromSquare.x][fromSquare.y].removePiece();
-		if (((King)(newboardstate[getKing(chance).getX()][getKing(chance).getY()].getPiece())).threatExists(newboardstate)==true)
+		if (((King)(newboardstate[getKing(chance).getX()][getKing(chance).getY()].getPiece())).threatExists(newboardstate) == true)
 			return true;
-		else
-			return false;
+		else return false;
     }
 
 	private void cleandestinations(ArrayList<ChessSquare> destlist) {

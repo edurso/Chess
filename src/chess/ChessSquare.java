@@ -80,8 +80,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 		
 		setLayout(new BorderLayout());
 		
-		if((x + y) % 2 == 0) setBackground(new Color(140, 0, 140));
-		else setBackground(Color.white);
+		if((x + y) % 2 == 0) setBackground(Color.white);
+		else setBackground(Color.PINK);
 		
 		if(cs.getPiece() != null) setPiece(cs.getPiece().getCopy());
 		else piece = null;
@@ -96,6 +96,7 @@ public class ChessSquare extends JPanel implements Cloneable{
 		this.piece = piece;
 		//change label
 		ImageIcon img = new ImageIcon(getClass().getResource(piece.getPath()));
+		//if(piece.getPath() != null) img = new ImageIcon(getClass().getResource(piece.getPath()));
 		content = new JLabel(img);
 		this.add(content);
 		content.paint(null);

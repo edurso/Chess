@@ -93,7 +93,10 @@ public abstract class Piece extends JLabel implements Cloneable{
 	/**
 	 * @return the path the the graphic for the game piece
 	 */
-	public String getPath() { return path; }
+	public String getPath() { 
+		if(path != null) return path; 
+		return "";
+	}
 
 	/**
 	 * sets the file path to the graphic of the game piece
