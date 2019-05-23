@@ -96,7 +96,7 @@ public class Menu extends JFrame{
      */
     private JLabel background;
     
-    private static Font f = new Font("TimesRoman", Font.PLAIN, 20);
+    public static Font f = new Font("TimesRoman", Font.PLAIN, 20);
     
     /**
      * Starts the menu at the main screen of the application

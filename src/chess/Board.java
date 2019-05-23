@@ -1,17 +1,22 @@
 package chess;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import base.Menu;
 import pieces.*;
@@ -70,8 +75,23 @@ public class Board extends JFrame implements MouseListener{
 	private boolean end;
 
 	private Player winner;
+
+	private static JFrame winFrame;
+
+	private static JPanel winPanel;
+
+	private static JTextField winText;
+	
+	private static JButton restartButton;
+
+	private static JButton quitButton;
+
+	private static Menu m;
 	
 	public Board(Player whitePlayer, Player blackPlayer) {
+
+		if(whitePlayer == null) whitePlayer = new Player("GuestWhitePlayer"); 
+		if(blackPlayer == null) blackPlayer = new Player("GuestBlackPlayer");
 
 		chance = 0;
 
@@ -183,13 +203,13 @@ public class Board extends JFrame implements MouseListener{
 				}
 				highlightdestinations(destinList);
 			}
-		} else {
-			if(c.x == previous.x && c.y == previous.y) {
+		} else {//if we have already selected a piecee and are now selecting a destination
+			if(c.x == previous.x && c.y == previous.y) {//deselect if the same cell was clicked
 				c.deselect();
 				cleandestinations(destinList);
 				destinList.clear();
 				previous = null;
-			} else if(c.getPiece()==null||previous.getPiece().getColor() != c.getPiece().getColor()) {//null pointer?
+			} else if(c.getPiece() == null || ( (c.getPiece() != null) && (previous.getPiece().getColor() != c.getPiece().getColor()))) {//null pointer?
 				if(c.isPossibleDestination()) {
 					if(c.getPiece() != null) c.removePiece();
 					c.setPiece(previous.getPiece());
@@ -383,17 +403,48 @@ public class Board extends JFrame implements MouseListener{
 		}
 		end = true;
 		//show winner
-		winMsg += ("\tCongrats " + winner.getUsername());
-		JPanel dubPanel = new JPanel();
-		JLabel dubLabel = new JLabel();
-		this.removeAll();
-		dubLabel.setText(winMsg);
-		dubPanel.add(dubLabel);
-		this.add(dubPanel);
+		winMsg += ("\nCongrats " + winner.getUsername());
 		//dispose this
 		System.out.println("SOmeone won");
-		//dispose();
-    }
+		dispose();
+		initWinWindow(winMsg);
+		revealWinWindow();
+	}
+	
+	public static void revealWinWindow() { winFrame.setVisible(true); }
+	
+	public static void killWinWindow() { winFrame.dispose(); }
+	
+	private static void initWinWindow(String msg) {
+		winFrame = new JFrame();
+		winFrame.setVisible(false);
+		winPanel = new JPanel();
+		winPanel.setBackground(Color.black);
+		winFrame.setTitle("Chess");
+		winFrame.setBounds(500, 500, 300, 250);
+		winText = new JTextField();
+		winText.setText(msg);
+		winText.setEditable(false);
+		winText.setBackground(Color.white);
+		m = new Menu();
+		restartButton = new JButton("Restart");
+	    restartButton.setBackground(Color.RED);
+	    restartButton.setFont(Menu.f);
+		quitButton = new JButton("Quit");
+	    quitButton.setBackground(Color.RED);
+	    quitButton.setFont(Menu.f);
+		winPanel.add(restartButton);
+		winPanel.add(quitButton);
+	    restartButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				winFrame.dispose();
+			    m.start();
+			}
+		});
+		quitButton.addActionListener(new ActionListener(){ public void actionPerformed(ActionEvent e) { System.exit(0); } });
+		winPanel.add(winText);
+		winFrame.add(winPanel);
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
