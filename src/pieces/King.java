@@ -201,9 +201,8 @@ public class King extends Piece {
 				tempX++;
 				tempY--;
 			}
-			else if(currentBoardState[tempX][tempY].getPiece().getColor()==this.getColor()) break;
-			else
-			{
+			else if(currentBoardState[tempX][tempY].getPiece().getColor() == this.getColor()) break;
+			else {
 				if (currentBoardState[tempX][tempY].getPiece() instanceof Bishop 
 						|| currentBoardState[tempX][tempY].getPiece() instanceof Queen)
     				return true;
@@ -234,8 +233,7 @@ public class King extends Piece {
 				tempY--;
 			}
 			else if(currentBoardState[tempX][tempY].getPiece().getColor() == this.getColor()) break;
-			else
-			{
+			else {
 				if (currentBoardState[tempX][tempY].getPiece() instanceof Bishop 
 						|| currentBoardState[tempX][tempY].getPiece() instanceof Queen)
     				return true;
@@ -250,8 +248,7 @@ public class King extends Piece {
 				tempY++;
 			}
 			else if(currentBoardState[tempX][tempY].getPiece().getColor() == this.getColor()) break;
-			else
-			{
+			else {
 				if (currentBoardState[tempX][tempY].getPiece() instanceof Bishop 
 						|| currentBoardState[tempX][tempY].getPiece() instanceof Queen)
     				return true;
