@@ -135,7 +135,7 @@ public class ChessSquare extends JPanel implements Cloneable{
 	 * selcets the square
 	 */
 	public void select() {
-		this.setBorder(BorderFactory.createLineBorder(Color.red,6));
+		this.setBorder(BorderFactory.createLineBorder(Color.red, 6));
 		this.isSelected = true;
 	}
 	
@@ -156,7 +156,7 @@ public class ChessSquare extends JPanel implements Cloneable{
 	 * sets the square as a possible destination (border color changes to blue)
 	 */
 	public void setPossibleDestination() {
-		this.setBorder(BorderFactory.createLineBorder(Color.blue,4));
+		this.setBorder(BorderFactory.createLineBorder(Color.blue, 4));
 		this.isPossibleDestination = true;
 	}
 	
@@ -186,8 +186,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	 */
 	public void removeCheck() {
 		this.setBorder(null);
-		if((x+y)%2==0) setBackground(new Color(110,200,110));
-		else setBackground(Color.white);
+		if((x + y) % 2 == 0) setBackground(Color.white);
+		else setBackground(Color.PINK);
 		this.isCheck = false;
 	}
 	

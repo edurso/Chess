@@ -68,6 +68,8 @@ public class Board extends JFrame implements MouseListener{
 	private ArrayList<ChessSquare> destinList;
 
 	private boolean end;
+
+	private Player winner;
 	
 	public Board(Player whitePlayer, Player blackPlayer) {
 
@@ -187,7 +189,7 @@ public class Board extends JFrame implements MouseListener{
 				cleandestinations(destinList);
 				destinList.clear();
 				previous = null;
-			} else if(c.getPiece()==null||previous.getPiece().getColor()!=c.getPiece().getColor()) {
+			} else if(c.getPiece()==null||previous.getPiece().getColor() != c.getPiece().getColor()) {//null pointer?
 				if(c.isPossibleDestination()) {
 					if(c.getPiece() != null) c.removePiece();
 					c.setPiece(previous.getPiece());
@@ -262,8 +264,7 @@ public class Board extends JFrame implements MouseListener{
 		}
 	}
 
-	private ArrayList<ChessSquare> filterdestination (ArrayList<ChessSquare> destlist, ChessSquare fromSquare)
-    {
+	private ArrayList<ChessSquare> filterdestination (ArrayList<ChessSquare> destlist, ChessSquare fromSquare) {
     	ArrayList<ChessSquare> newlist = new ArrayList<ChessSquare>();
     	ChessSquare newboardstate[][] = new ChessSquare[8][8];
     	ListIterator<ChessSquare> it = destlist.listIterator();
@@ -364,17 +365,34 @@ public class Board extends JFrame implements MouseListener{
     }
 
 	private void gameEnd() {
+		String winMsg = "The ";
     	cleandestinations(destinList);
     	if(previous != null) previous.removePiece();
     	if(chance == Piece.COLOR_WHITE) {	
 			//update white player stats, set winner
+			winner = whitePlayer;
+			winMsg += "White Player Won!";
+			whitePlayer.addGamePlayed(true);
+			blackPlayer.addGamePlayed(false);
 		} else {
 			//update black player stats, set winner
+			winner = blackPlayer;
+			winMsg += "Black Player Won!";
+			whitePlayer.addGamePlayed(false);
+			blackPlayer.addGamePlayed(true);
 		}
 		end = true;
 		//show winner
+		winMsg += ("\tCongrats " + winner.getUsername());
+		JPanel dubPanel = new JPanel();
+		JLabel dubLabel = new JLabel();
+		this.removeAll();
+		dubLabel.setText(winMsg);
+		dubPanel.add(dubLabel);
+		this.add(dubPanel);
 		//dispose this
-		dispose();
+		System.out.println("SOmeone won");
+		//dispose();
     }
 
 	@Override
