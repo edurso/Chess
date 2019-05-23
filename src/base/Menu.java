@@ -96,6 +96,9 @@ public class Menu extends JFrame{
      */
     private JLabel background;
     
+    /**
+     * Universal font for project
+     */
     public static Font f = new Font("TimesRoman", Font.PLAIN, 20);
     
     /**

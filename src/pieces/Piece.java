@@ -43,15 +43,6 @@ public abstract class Piece extends JLabel implements Cloneable{
 	 */
 	ArrayList<ChessSquare> possibleMoves = new ArrayList<>();
 	
-//	protected Piece (String path) {
-//		ImageIcon icon = new ImageIcon("src/sprites/" + path);
-//		this.setIcon(icon);
-//	}
-//	
-//	public void setPieceVisible() { this.setVisible(true); }
-//	
-//	public void setPieceInvisible() { this.setVisible(false); }
-	
 	/**
 	 * updates the list of moves the piece can make
 	 * @param currentBoardState array of ChessSquares representing the current state of the board 
