@@ -20,7 +20,7 @@ public class Player implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private String username = "User";
+	private String username = "";
 	
 	private int gamesPlayed = 0;
 	
@@ -55,7 +55,7 @@ public class Player implements Serializable{
 			inputFile = new File(System.getProperty("user.dir") + File.separator + fname);
 			outputFile = new File(System.getProperty("user.dir") + File.separator + "tempfile.dat");
 		} catch (SecurityException e) {
-			JOptionPane.showMessageDialog(null, "Read-Write Permission Denied !! Program Cannot Start");
+			JOptionPane.showMessageDialog(null, "Application does not have access to the specified drive");
 			//System.exit(0);
 		} 
 		boolean playerDoesntExist;
@@ -83,12 +83,12 @@ public class Player implements Serializable{
 			inputFile.delete();
 			output.close();
 			File newf = new File(System.getProperty("user.dir")+ File.separator + fname);
-			if(outputFile.renameTo(newf)==false) System.out.println("File Renameing Unsuccessful");
+			if(outputFile.renameTo(newf) == false) System.out.println("File Renameing Unsuccessful");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Unable to read/write the required Game files !! Press ok to continue");
+			JOptionPane.showMessageDialog(null, "unable to read/view proper files. press ok to continue");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File");

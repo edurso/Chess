@@ -1,5 +1,7 @@
 package base;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -45,6 +47,16 @@ public class Menu extends JFrame{
 	 * Button that redirects to main menu
 	 */
 	private JButton back;
+	
+	/**
+	* Checkbox that enables and disables the music
+	*/
+	private JCheckBox music;
+
+	/**
+	* Clip for the audio file
+	*/
+	private Clip clip;
 	
 	/**
 	 * Button that launches an easy single player game
@@ -231,13 +243,20 @@ public class Menu extends JFrame{
 	 * Configures the components for the settings menu
 	 */
 	private void initSettingsButtons() {
-		
-		//TODO - Implement
-		
+		music = new JCheckBox("Enable Music");
+		music.setBounds(450,500,100,50);	
+		music.setBorderPaintedFlat(false);
+		music.setBackground(Color.RED);
+		JPanel temp = new JPanel();
+		temp.setBackground(Color.RED);
+		temp.add(music);
+		temp.setBounds(0, 301, 1000, 903);
+		temp.setVisible(true);
+
+		addBack(temp);
+		settingsPanel.add(temp);
 		settingsPanel.add(background);
 		background.setVisible(true);
-		
-		addBack(settingsPanel);
 	}
 	
 	/**

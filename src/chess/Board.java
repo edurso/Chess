@@ -519,7 +519,7 @@ public class Board extends JFrame implements MouseListener{
     			y = tempc.y;
     		}
     		newBoardState[fromSquare.x][fromSquare.y].removePiece();
-    		if ((((King)(newBoardState[x][y].getPiece())).threatExists(newBoardState) == false)) newList.add(tempc);
+    		if ((newBoardState[x][y].getPiece() instanceof King) && (((King)(newBoardState[x][y].getPiece())).threatExists(newBoardState) == false)) newList.add(tempc);
     	}
     	return newList;
     }
