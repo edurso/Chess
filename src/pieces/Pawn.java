@@ -17,6 +17,7 @@ public class Pawn extends Piece {
 	 * @param color color for the Pawn
 	 */
 	public Pawn(String id, String path, int color) {
+		//super(path);
 		this.setId(id);
 		this.setPath(path);
 		this.setColor(color);

@@ -1,5 +1,7 @@
 package base;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -45,6 +47,16 @@ public class Menu extends JFrame{
 	 * Button that redirects to main menu
 	 */
 	private JButton back;
+	
+	/**
+	* Checkbox that enables and disables the music
+	*/
+	private JCheckBox music;
+
+	/**
+	* Clip for the audio file
+	*/
+	private Clip clip;
 	
 	/**
 	 * Button that launches an easy single player game
@@ -97,14 +109,15 @@ public class Menu extends JFrame{
     private JLabel background;
     
     /**
+     * Universal font for project
+     */
+    public static Font f = new Font("TimesRoman", Font.PLAIN, 20);
+    
+    /**
      * Starts the menu at the main screen of the application
      */
 	public void start() {
-		ImageIcon image = new ImageIcon("/Chess/src/sprites/chess_background.png"); 
-		background = new JLabel("/Chess/src/sprites/chess_background.png", image, JLabel.CENTER);
-		background.setBounds(0,0,1000,1204);
-		add(background);
-		background.setVisible(true);
+		
 		
 		setTitle("Chess");
 		
@@ -122,12 +135,20 @@ public class Menu extends JFrame{
 	    settingsPanel = new JPanel();
 	    settingsPanel.setLayout(null);
 	    
-	    initMainMenuButtons();
-	    initSettingsButtons();
-	    initSingleplayerButtons();
-	    initMultiplayerButtons();
+	    //initMainMenuButtons();
+	    //initSettingsButtons();
+	    //initSingleplayerButtons();
+	    //initMultiplayerButtons();
 	    
 	    getContentPane().add(menuPanel);
+	    ImageIcon image = new ImageIcon(getClass().getResource("chess_background.png")); 
+		background = new JLabel(image, JLabel.CENTER);
+		background.setBounds(0,0,1000,1204);
+
+	    initMainMenuButtons();
+	    
+		//add(background);
+		//background.setVisible(true);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setSize(1000,1204);
 	    setResizable(false);
@@ -155,11 +176,12 @@ public class Menu extends JFrame{
 	 */
 	private void initMainMenuButtons() {
 		
-		menuPanel.add(background);
-		background.setVisible(true);
+	
 		
 		quitButton = new JButton("Quit");
 	    quitButton.setBounds(400,800,200,80);
+	    quitButton.setBackground(Color.RED);
+	    quitButton.setFont(f);
 	    menuPanel.add(quitButton);
 	    quitButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -169,6 +191,8 @@ public class Menu extends JFrame{
 	    
 	    settingsButton = new JButton("Settings");
 	    settingsButton.setBounds(400,650,200,80);
+	    settingsButton.setBackground(Color.RED);
+	    settingsButton.setFont(f);
 	    menuPanel.add(settingsButton);
 	    settingsButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -182,6 +206,8 @@ public class Menu extends JFrame{
 	    
 	    singleButton = new JButton("Single Player");
 	    singleButton.setBounds(400,350,200,80);
+	    singleButton.setBackground(Color.RED);
+	    singleButton.setFont(f);
 	    menuPanel.add(singleButton);
 	    singleButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -195,6 +221,8 @@ public class Menu extends JFrame{
 	    
 	    multiButton = new JButton("Multiplayer");
 	    multiButton.setBounds(400,500,200,80);
+	    multiButton.setBackground(Color.RED);
+	    multiButton.setFont(f);
 	    menuPanel.add(multiButton);
 	    multiButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -206,26 +234,40 @@ public class Menu extends JFrame{
 			}
 		});
 	    
+		menuPanel.add(background);
+		background.setVisible(true);
+		
 	}
 	
 	/**
 	 * Configures the components for the settings menu
 	 */
 	private void initSettingsButtons() {
+		music = new JCheckBox("Enable Music");
+		music.setBounds(450,500,100,50);	
+		music.setBorderPaintedFlat(false);
+		music.setBackground(Color.RED);
+		JPanel temp = new JPanel();
+		temp.setBackground(Color.RED);
+		temp.add(music);
+		temp.setBounds(0, 301, 1000, 903);
+		temp.setVisible(true);
+
+		addBack(temp);
+		settingsPanel.add(temp);
 		settingsPanel.add(background);
 		background.setVisible(true);
-		//TODO - Implement
-		addBack(settingsPanel);
 	}
 	
 	/**
 	 * Configures the components for the single player menu
 	 */
 	private void initSingleplayerButtons() {
-		singlePanel.add(background);
-		background.setVisible(true);
+		
 		easy = new JButton("Easy");
 		easy.setBounds(400,350,200,80);
+	    easy.setBackground(Color.RED);
+	    easy.setFont(f);
 	    singlePanel.add(easy);
 	    easy.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -236,6 +278,8 @@ public class Menu extends JFrame{
 	    
 	    medium = new JButton("Medium");
 	    medium.setBounds(400,500,200,80);
+	    medium.setBackground(Color.RED);
+	    medium.setFont(f);
 	    singlePanel.add(medium);
 	    medium.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -246,6 +290,8 @@ public class Menu extends JFrame{
 	    
 	    hard = new JButton("Hard");
 	    hard.setBounds(400,650,200,80);
+	    hard.setBackground(Color.RED);
+	    hard.setFont(f);
 	    singlePanel.add(hard);
 	    hard.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -253,18 +299,20 @@ public class Menu extends JFrame{
 				Game.run(GameStyle.SINGLE_HARD); 
 			}
 		});
-	    
 	    addBack(singlePanel);
+	    singlePanel.add(background);
+		background.setVisible(true);
 	}
 	
 	/**
 	 * Configures the components for the multiplayer menu
 	 */
 	private void initMultiplayerButtons() {
-		multiPanel.add(background);
-		background.setVisible(true);
+		
 		local = new JButton("Local");
 		local.setBounds(400,500,200,80);
+	    local.setBackground(Color.RED);
+	    local.setFont(f);
 	    multiPanel.add(local);
 	    local.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -275,6 +323,8 @@ public class Menu extends JFrame{
 	    
 	    online = new JButton("Online");
 	    online.setBounds(400,650,200,80);
+	    online.setBackground(Color.RED);
+	    online.setFont(f);
 	    multiPanel.add(online);
 	    online.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -282,8 +332,9 @@ public class Menu extends JFrame{
 				Game.run(GameStyle.MULTI_ONLINE);
 			}
 		});
-	    
 	    addBack(multiPanel);
+	    multiPanel.add(background);
+		background.setVisible(true);
 	}
 	
 	/**
@@ -293,6 +344,8 @@ public class Menu extends JFrame{
 	private void addBack(JPanel panel) {
 		back = new JButton("Go To Home");
 	    back.setBounds(400,800,200,80);
+	    back.setBackground(Color.RED);
+	    back.setFont(f);
 	    panel.add(back);
 	    back.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {

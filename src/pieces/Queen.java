@@ -17,6 +17,7 @@ public class Queen extends Piece {
 	 * @param color color for the Queen
 	 */
 	public Queen(String id, String path, int color) {
+		//super(path);
 		this.setId(id);
 		this.setPath(path);
 		this.setColor(color);

@@ -17,6 +17,7 @@ public class Castle extends Piece {
 	 * @param color color for the castle
 	 */
 	public Castle(String id, String path, int color) {
+		//super(path);
 		this.setId(id);
 		this.setPath(path);
 		this.setColor(color);

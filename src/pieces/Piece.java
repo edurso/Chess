@@ -2,13 +2,16 @@ package pieces;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import chess.ChessSquare;
 
 /**
  * Piece class serves as super class for all game pieces
  * @author edurso
  */
-public abstract class Piece implements Cloneable{
+public abstract class Piece extends JLabel implements Cloneable{
 	
 	/**
 	 * white game piece color
@@ -81,7 +84,10 @@ public abstract class Piece implements Cloneable{
 	/**
 	 * @return the path the the graphic for the game piece
 	 */
-	public String getPath() { return path; }
+	public String getPath() { 
+		if(path != null) return path; 
+		return "whitePawn.png";
+	}
 
 	/**
 	 * sets the file path to the graphic of the game piece
