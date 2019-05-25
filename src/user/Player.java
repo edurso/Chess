@@ -16,7 +16,7 @@ import chess.Game;
 
 public class Player implements Serializable{
 	
-	private static final String fname = "chessgamedata.dat";
+	private static final String fname = "gnome_chess_game_data.dat";
 	
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,10 @@ public class Player implements Serializable{
 
 	public int getGamesWon() { return gamesWon; }
 	
-	public Integer getWinPercent() { return new Integer((gamesWon*100)/gamesPlayed); }
+	public Integer getWinPercent() {
+		if(gamesPlayed != 0) return new Integer((gamesWon * 100) / gamesPlayed); 
+		return 0;
+	}
 	
 	public void savePlayerData() {
 		ObjectInputStream input = null;
@@ -114,7 +117,7 @@ public class Player implements Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 			try { input.close(); } catch (IOException e1) {}
-			JOptionPane.showMessageDialog(null, "Unable to read the required Game files !!");
+			JOptionPane.showMessageDialog(null, "unable to read/view proper files. press ok to continue");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File");

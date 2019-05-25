@@ -18,9 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import base.Menu;
-import pieces.*;
+import start.*;
 import user.Player;
+import pieces.*;
 
 /**
  * Class sets up and runs board game. Also contains methods for checking piece conditions
@@ -305,6 +305,7 @@ public class Board extends JFrame implements MouseListener{
 		}
 		
 		setTitle("Chess");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(1200, 825);
 		setResizable(false);
 		add(board);
@@ -319,6 +320,7 @@ public class Board extends JFrame implements MouseListener{
 	 */
 	public void play() {
 		setVisible(true);
+		System.out.println(Settings.getActiveWhitePlayer().getUsername());//null by the time we enter
 		//System.out.println("Piece at 0, 0 is ... " + boardState[0][0].getPiece().getPath());//just for testing
 	}
 
@@ -347,7 +349,7 @@ public class Board extends JFrame implements MouseListener{
 					if(boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) destinList = new ArrayList<ChessSquare>(destinaionFilter(destinList,c));
 					else if(destinList.isEmpty() == false && endangersKing(c, destinList.get(0))) destinList.clear();
 				}
-				highlightdestinations(destinList);
+				showDestins(destinList);
 			}
 		} else {//if we have already selected a piecee and are now selecting a destination
 			if(c.x == previous.x && c.y == previous.y) {//deselect if the same cell was clicked
@@ -398,7 +400,7 @@ public class Board extends JFrame implements MouseListener{
 					if(boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) destinList = new ArrayList<ChessSquare>(destinaionFilter(destinList,c));
 					else if(destinList.isEmpty()==false && endangersKing(c,destinList.get(0))) destinList.clear();
 				}
-				highlightdestinations(destinList);
+				showDestins(destinList);
 			}
 		}
 		if(c.getPiece() != null && c.getPiece() instanceof King) {
@@ -451,7 +453,7 @@ public class Board extends JFrame implements MouseListener{
     			y = temp.y;
     		}
     		newBoardState[fromSquare.x][fromSquare.y].removePiece();
-    		if ((((King)(newBoardState[x][y].getPiece())).threatExists(newBoardState) == false)) newList.add(temp);
+    		if ((newBoardState[x][y].getPiece() instanceof King) && (((King)(newBoardState[x][y].getPiece())).threatExists(newBoardState) == false)) newList.add(temp);
     	}
     	return newList;
     }
@@ -471,7 +473,7 @@ public class Board extends JFrame implements MouseListener{
 			((King)(newBoardState[toSquare.x][toSquare.y].getPiece())).setY(fromSquare.y);
 		}
 		newBoardState[fromSquare.x][fromSquare.y].removePiece();
-		if (((King)(newBoardState[getKing(chance).getX()][getKing(chance).getY()].getPiece())).threatExists(newBoardState) == true) return true;
+		if (((newBoardState[getKing(chance).getX()][getKing(chance).getY()].getPiece() instanceof King) && ((King)(newBoardState[getKing(chance).getX()][getKing(chance).getY()].getPiece())).threatExists(newBoardState) == true)) return true;
 		else return false;
     }
 
@@ -488,7 +490,7 @@ public class Board extends JFrame implements MouseListener{
 	 * highlights possible destinations in list
 	 * @param destinList list of possible destinations
 	 */
-    private void highlightdestinations(ArrayList<ChessSquare> destinList) {
+    private void showDestins(ArrayList<ChessSquare> destinList) {
     	ListIterator<ChessSquare> it = destinList.listIterator();
     	while(it.hasNext()) it.next().setPossibleDestination();
     }
@@ -500,7 +502,7 @@ public class Board extends JFrame implements MouseListener{
      * @param color color of mover
      * @return filtered list
      */
-	private ArrayList<ChessSquare> incheckfilter (ArrayList<ChessSquare> destinList, ChessSquare fromSquare, int color) {
+	private ArrayList<ChessSquare> inCheckFilter (ArrayList<ChessSquare> destinList, ChessSquare fromSquare, int color) {
     	ArrayList<ChessSquare> newList = new ArrayList<>();
     	ChessSquare[][] newBoardState = new ChessSquare[8][8];
     	ListIterator<ChessSquare> it = destinList.listIterator();
@@ -536,7 +538,7 @@ public class Board extends JFrame implements MouseListener{
     			if (boardState[i][j].getPiece() != null && boardState[i][j].getPiece().getColor() == color) {
     				dlist.clear();
     				dlist = boardState[i][j].getPiece().move(boardState, i, j);
-    				dlist = incheckfilter(dlist,boardState[i][j],color);
+    				dlist = inCheckFilter(dlist,boardState[i][j],color);
     				if(dlist.size() != 0) return false;
     			}
     		}
@@ -565,6 +567,7 @@ public class Board extends JFrame implements MouseListener{
 			blackPlayer.addGamePlayed(true);
 		}
 		end = true;
+		Settings.updatePlayersMenuStats(""+whitePlayer.getGamesWon(), ""+whitePlayer.getWinPercent(), ""+blackPlayer.getGamesWon(), ""+blackPlayer.getWinPercent());
 		//show winner
 		winMsg += ("\nCongrats " + winner.getUsername());
 		//dispose this

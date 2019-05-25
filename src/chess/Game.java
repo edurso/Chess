@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import base.Menu;
+import start.*;
 
 /**
  * Class that runs the game
@@ -38,7 +38,7 @@ public class Game {
 	private static JButton errorButton;
 	
 	/**
-	 * menu to restart from
+	 * menu to start from
 	 */
 	private static Menu m;
 	
@@ -46,6 +46,14 @@ public class Game {
 	 * board used for game
 	 */
 	private static Board mainBoard;
+
+	/**
+	 * starts the game at the menu
+	 */
+	public static void run(){
+		m = new Menu();
+		m.start();
+	}
 	
 	/**
 	 * runs the game of the specified {@code style}
@@ -66,7 +74,7 @@ public class Game {
 				
 				break;
 			case MULTI_LOCAL:
-				mainBoard = new Board(Menu.getActiveWhitePlayer(), Menu.getActiveBlackPlayer());
+				mainBoard = new Board(Settings.getActiveWhitePlayer(), Settings.getActiveBlackPlayer());
 				mainBoard.play();
 				break;
 			case MULTI_ONLINE:

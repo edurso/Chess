@@ -1,4 +1,4 @@
-package base;
+package start;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 
@@ -49,16 +49,6 @@ public class Menu extends JFrame{
 	private JButton back;
 	
 	/**
-	* Checkbox that enables and disables the music
-	*/
-	private JCheckBox music;
-
-	/**
-	* Clip for the audio file
-	*/
-	private Clip clip;
-	
-	/**
 	 * Button that launches an easy single player game
 	 */
 	private JButton easy;
@@ -106,8 +96,13 @@ public class Menu extends JFrame{
     /**
      * Image for the background of the menu
      */
-    private JLabel background;
-    
+	private JLabel background;
+	
+	/**
+	 * settings for menu button
+	 */
+	private Settings settings;
+	 
     /**
      * Universal font for project
      */
@@ -135,17 +130,14 @@ public class Menu extends JFrame{
 	    settingsPanel = new JPanel();
 	    settingsPanel.setLayout(null);
 	    
-	    //initMainMenuButtons();
-	    //initSettingsButtons();
-	    //initSingleplayerButtons();
-	    //initMultiplayerButtons();
-	    
 	    getContentPane().add(menuPanel);
 	    ImageIcon image = new ImageIcon(getClass().getResource("chess_background.png")); 
 		background = new JLabel(image, JLabel.CENTER);
 		background.setBounds(0,0,1000,1204);
 
 	    initMainMenuButtons();
+	    
+	    settings = new Settings();
 	    
 		//add(background);
 		//background.setVisible(true);
@@ -159,25 +151,19 @@ public class Menu extends JFrame{
 	 * gets active players from the list of players
 	 * @return the player who is playing on the white side
 	 */
-	public static Player getActiveWhitePlayer() {
-		return null;
-	}
+	public static Player getActiveWhitePlayer() { return Settings.getActiveWhitePlayer(); }
 	
 	/**
 	 * gets active players from the list of players
 	 * @return the player who is playing on the black side
 	 */
-	public static Player getActiveBlackPlayer() {
-		return null;
-	}
+	public static Player getActiveBlackPlayer() { return Settings.getActiveBlackPlayer(); }
 	
 	/**
 	 * Configures the components for the main menu
 	 */
 	private void initMainMenuButtons() {
-		
-	
-		
+
 		quitButton = new JButton("Quit");
 	    quitButton.setBounds(400,800,200,80);
 	    quitButton.setBackground(Color.RED);
@@ -240,23 +226,22 @@ public class Menu extends JFrame{
 	}
 	
 	/**
+	 * keeps track to make sure multiple go to home buttons are not added
+	 */
+	int count = 0;
+
+	/**
 	 * Configures the components for the settings menu
 	 */
 	private void initSettingsButtons() {
-		music = new JCheckBox("Enable Music");
-		music.setBounds(450,500,100,50);	
-		music.setBorderPaintedFlat(false);
-		music.setBackground(Color.RED);
-		JPanel temp = new JPanel();
-		temp.setBackground(Color.RED);
-		temp.add(music);
-		temp.setBounds(0, 301, 1000, 903);
-		temp.setVisible(true);
+		settings.setBounds(0, 301, 1000, 903);
+		settings.setVisible(true);
 
-		addBack(temp);
-		settingsPanel.add(temp);
+		if (count == 0) addBack(settings);
+		settingsPanel.add(settings);
 		settingsPanel.add(background);
 		background.setVisible(true);
+		count++;
 	}
 	
 	/**
@@ -353,6 +338,7 @@ public class Menu extends JFrame{
 				getContentPane().removeAll();
 				getContentPane().add(menuPanel);
 				initMainMenuButtons();
+				System.out.println(Settings.getActiveWhitePlayer().getUsername());
 			    setVisible(true);
 			}
 		});
