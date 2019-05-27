@@ -1,5 +1,6 @@
 package chess;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import base.Menu;
+import start.*;
 
 /**
  * Class that runs the game
@@ -38,14 +39,19 @@ public class Game {
 	private static JButton errorButton;
 	
 	/**
-	 * menu to restart from
+	 * menu to start from
 	 */
-	private static Menu m;
+	public static Menu menu = new Menu();
 	
 	/**
 	 * board used for game
 	 */
-	private static Board mainBoard;
+	private static Board board;
+
+	/**
+	 * starts the game at the menu
+	 */
+	public static void start(){ menu.start(); }
 	
 	/**
 	 * runs the game of the specified {@code style}
@@ -66,8 +72,8 @@ public class Game {
 				
 				break;
 			case MULTI_LOCAL:
-				mainBoard = new Board(Menu.getActiveWhitePlayer(), Menu.getActiveBlackPlayer());
-				mainBoard.play();
+				board = new Board(Settings.getActiveWhitePlayer(), Settings.getActiveBlackPlayer());
+				board.play();
 				break;
 			case MULTI_ONLINE:
 				errorFrame.setVisible(true);
@@ -95,21 +101,25 @@ public class Game {
 		errorFrame = new JFrame();
 		errorFrame.setVisible(false);
 		errorPanel = new JPanel();
-		errorFrame.setTitle("Unexpected Error Encountered");
+		errorPanel.setBackground(Color.BLACK);
+		errorFrame.setTitle("Unexpected Error");
 		errorFrame.setBounds(500, 500, 500, 250);
 		errorText = new JTextField();
+		errorText.setBackground(Color.BLACK);
+		errorText.setForeground(Color.RED);
 		errorText.setText("An Unexpected Error Has Occured. We Reccomend Restarting the Application");
 		errorText.setEditable(false);
-		m = new Menu();
+		menu = new Menu();
 		errorButton = new JButton("Restart");
-	    errorPanel.add(errorButton);
+		errorButton.setBackground(Color.RED);
 	    errorButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				errorFrame.dispose();
-			    m.start();
+			    menu.start();
 			}
 		});
 		errorPanel.add(errorText);
+	    errorPanel.add(errorButton);
 		errorFrame.add(errorPanel);
 	}
 	
