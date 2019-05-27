@@ -116,8 +116,6 @@ public class Menu extends JFrame{
 		
 		setTitle("Chess");
 		
-		//background
-		
 		menuPanel = new JPanel();
 	    menuPanel.setLayout(null);
 	    
@@ -139,8 +137,6 @@ public class Menu extends JFrame{
 	    
 	    settings = new Settings();
 	    
-		//add(background);
-		//background.setVisible(true);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setSize(1000,1204);
 	    setResizable(false);
@@ -237,7 +233,7 @@ public class Menu extends JFrame{
 		settings.setBounds(0, 301, 1000, 903);
 		settings.setVisible(true);
 
-		if (count == 0) addBack(settings);
+		//if (count == 0) addBack(settings);
 		settingsPanel.add(settings);
 		settingsPanel.add(background);
 		background.setVisible(true);
@@ -332,16 +328,18 @@ public class Menu extends JFrame{
 	    back.setBackground(Color.RED);
 	    back.setFont(f);
 	    panel.add(back);
-	    back.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-			    setVisible(false);
-				getContentPane().removeAll();
-				getContentPane().add(menuPanel);
-				initMainMenuButtons();
-				System.out.println(Settings.getActiveWhitePlayer().getUsername());
-			    setVisible(true);
-			}
-		});
+	    back.addActionListener(new ActionListener(){ public void actionPerformed(ActionEvent e) { goToHome(); } });
+	}
+	
+	/**
+	 * Redirects to the main menu of the application
+	 */
+	protected void goToHome() {
+		setVisible(false);
+		getContentPane().removeAll();
+		getContentPane().add(menuPanel);
+		initMainMenuButtons();
+	    setVisible(true);
 	}
 
 }

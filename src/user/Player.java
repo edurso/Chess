@@ -14,40 +14,119 @@ import javax.swing.JOptionPane;
 
 import chess.Game;
 
+/**
+ * Stored data about players and is the interface with the file to get/save player data
+ * @author edurso
+ */
 public class Player implements Serializable{
 	
+	/**
+	 * filename
+	 */
 	private static final String fname = "gnome_chess_game_data.dat";
 	
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * holder for the active white player when the menu restarts
+	 */
+	private static String activeWhite = "";
+	
+	/**
+	 * holder for the active black player when the menu restarts
+	 */
+	private static String activeBlack = "";
 
+	/**
+	 * username of the player
+	 */
 	private String username = "";
 	
+	/**
+	 * number of games the player has played
+	 */
 	private int gamesPlayed = 0;
 	
+	/**
+	 * number of games the player has won
+	 */
 	private int gamesWon = 0;
 	
-	public Player (String username) {
-		this.username = username;
-	}
+	/**
+	 * created new player with {@code username}
+	 * @param username
+	 */
+	public Player (String username) { this.username = username; }
 
+	/**
+	 * retrieves the active white player
+	 * @return the active white player
+	 */
+	public static String getActiveWhite() { return activeWhite; }
+
+	/**
+	 * sets the active white player
+	 * @param activeWhite player username of active white player
+	 */
+	public static void setActiveWhite(String activeWhite) { Player.activeWhite = activeWhite; }
+
+	/**
+	 * retrieves the active black player
+	 * @return the active black player
+	 */
+	public static String getActiveBlack() { return activeBlack; }
+
+	/**
+	 * sets the active black player
+	 * @param activeBlack player username of active black player
+	 */
+	public static void setActiveBlack(String activeBlack) { Player.activeBlack = activeBlack; }
+
+	/**
+	 * retrieves the username of the player
+	 * @return player's username
+	 */
 	public String getUsername() { return username; }
 
+	/**
+	 * sets the players username
+	 * @param username new username for player
+	 */
 	public void setUsername(String username) { this.username = username; }
 
+	/**
+	 * retrieves the number of games the player has played
+	 * @return
+	 */
 	public int getGamesPlayed() { return gamesPlayed; }
 
+	/**
+	 * adds a game played, and a game won if the game was won by the player
+	 * @param didWin weather or not the player won the game
+	 */
 	public void addGamePlayed(boolean didWin) {
 		gamesPlayed++;
 		gamesWon += (didWin) ? 1 : 0;
 	}
 
+	/**
+	 * retrieves the number of games the player has won
+	 * @return number of games won by the player
+	 */
 	public int getGamesWon() { return gamesWon; }
 	
+	/**
+	 * retrieves the percent of games the player has won
+	 * @return player's won games as a percent
+	 */
 	public Integer getWinPercent() {
 		if(gamesPlayed != 0) return new Integer((gamesWon * 100) / gamesPlayed); 
 		return 0;
 	}
 	
+	/**
+	 * saves all player data for current player only
+	 */
 	public void savePlayerData() {
 		ObjectInputStream input = null;
 		ObjectOutputStream output = null;
@@ -58,8 +137,8 @@ public class Player implements Serializable{
 			inputFile = new File(System.getProperty("user.dir") + File.separator + fname);
 			outputFile = new File(System.getProperty("user.dir") + File.separator + "tempfile.dat");
 		} catch (SecurityException e) {
-			JOptionPane.showMessageDialog(null, "Application does not have access to the specified drive");
-			//System.exit(0);
+			Game.setErrorText("Application does not have access to the specified drive");
+			Game.revealErrorWindow();
 		} 
 		boolean playerDoesntExist;
 		try {
@@ -86,18 +165,26 @@ public class Player implements Serializable{
 			inputFile.delete();
 			output.close();
 			File newf = new File(System.getProperty("user.dir")+ File.separator + fname);
-			if(outputFile.renameTo(newf) == false) System.out.println("File Renameing Unsuccessful");
+			if(outputFile.renameTo(newf) == false) { 
+				Game.setErrorText("File Renameing Unsuccessful");
+				Game.revealErrorWindow();
+			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Game.setErrorText("Game File Does Not Exist");
+			Game.revealErrorWindow();
 		} catch (IOException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "unable to read/view proper files. press ok to continue");
+			Game.setErrorText("unable to read/view proper files. press ok to continue");
+			Game.revealErrorWindow();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File");
+			Game.setErrorText("Game Data File Corrupted");
+			Game.revealErrorWindow();
 		} catch (Exception e) { Game.revealErrorWindow(); }
 	}
 	
+	/**
+	 * retrieves a list of all the players stored in the file
+	 * @return list of saved players
+	 */
 	public static ArrayList<Player> getPlayers() {
 		Player tempPlayer;
 		ObjectInputStream input = null;
@@ -115,12 +202,12 @@ public class Player implements Serializable{
 			players.clear();
 			return players;
 		} catch (IOException e) {
-			e.printStackTrace();
 			try { input.close(); } catch (IOException e1) {}
-			JOptionPane.showMessageDialog(null, "unable to read/view proper files. press ok to continue");
+			Game.setErrorText("unable to read/view proper files");
+			Game.revealErrorWindow();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Game Data File Corrupted !! Click Ok to Continue Builing New File");
+			Game.setErrorText("Game Data File Corrupted");
+			Game.revealErrorWindow();
 		} catch (Exception e) { Game.revealErrorWindow(); }
 		return players;
 	}

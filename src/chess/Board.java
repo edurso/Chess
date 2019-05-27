@@ -219,11 +219,6 @@ public class Board extends JFrame implements MouseListener{
 	private static JButton quitButton;
 
 	/**
-	 * menu for restarting the application
-	 */
-	private static Menu m;
-	
-	/**
 	 * initializes board and pieces
 	 * @param whitePlayer selected white player to play game
 	 * @param blackPlayer selected black player to play game
@@ -320,7 +315,7 @@ public class Board extends JFrame implements MouseListener{
 	 */
 	public void play() {
 		setVisible(true);
-		System.out.println(Settings.getActiveWhitePlayer().getUsername());//null by the time we enter
+		//System.out.println(Settings.getActiveWhitePlayer().getUsername());
 		//System.out.println("Piece at 0, 0 is ... " + boardState[0][0].getPiece().getPath());//just for testing
 	}
 
@@ -568,6 +563,11 @@ public class Board extends JFrame implements MouseListener{
 		}
 		end = true;
 		Settings.updatePlayersMenuStats(""+whitePlayer.getGamesWon(), ""+whitePlayer.getWinPercent(), ""+blackPlayer.getGamesWon(), ""+blackPlayer.getWinPercent());
+		//save player data
+		Player.setActiveWhite(whitePlayer.getUsername());
+		Player.setActiveBlack(blackPlayer.getUsername());
+		whitePlayer.savePlayerData();
+		blackPlayer.savePlayerData();
 		//show winner
 		winMsg += ("\nCongrats " + winner.getUsername());
 		//dispose this
@@ -602,7 +602,6 @@ public class Board extends JFrame implements MouseListener{
 		winText.setText(msg);
 		winText.setEditable(false);
 		winText.setBackground(Color.white);
-		m = new Menu();
 		restartButton = new JButton("Restart");
 	    restartButton.setBackground(Color.RED);
 	    restartButton.setFont(Menu.f);
@@ -614,7 +613,7 @@ public class Board extends JFrame implements MouseListener{
 	    restartButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				winFrame.dispose();
-			    m.start();
+			    Game.menu.start();
 			}
 		});
 		quitButton.addActionListener(new ActionListener(){ public void actionPerformed(ActionEvent e) { System.exit(0); } });
