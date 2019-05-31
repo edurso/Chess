@@ -19,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import start.*;
+import user.AI;
 import user.Player;
+import user.User;
 import pieces.*;
 
 /**
@@ -225,8 +227,8 @@ public class Board extends JFrame implements MouseListener{
 	 */
 	public Board(Player whitePlayer, Player blackPlayer) {
 
-		if(whitePlayer == null) whitePlayer = new Player("GuestWhitePlayer"); 
-		if(blackPlayer == null) blackPlayer = new Player("GuestBlackPlayer");
+		if(whitePlayer == null) whitePlayer = new User("GuestWhitePlayer"); 
+		if(blackPlayer == null) blackPlayer = new User("GuestBlackPlayer");
 
 		chance = Piece.COLOR_WHITE;
 
@@ -335,6 +337,7 @@ public class Board extends JFrame implements MouseListener{
 		if (previous == null) {//if this is the first piece we are selecting . . . 
 			if(c.getPiece() != null) {
 				if(c.getPiece().getColor() != chance) return;
+				else if(blackPlayer instanceof AI && c.getPiece().getColor() == Piece.COLOR_BLACK) return;
 				c.select();
 				previous = c;
 				destinList.clear();
@@ -420,6 +423,26 @@ public class Board extends JFrame implements MouseListener{
 			//reset timer
 			if(Board.move == Board.WHITE_MOVE) Board.move = Board.BLACK_MOVE;
 			else Board.move = Board.WHITE_MOVE;
+		}
+		if(Board.move == Board.BLACK_MOVE && blackPlayer instanceof AI) {
+			//System.out.println("here");//?????????????????????????????
+			blackPlayer.move(boardState);
+			// changeChance();
+			//cleanup
+			if (boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) {
+				chance ^= 1;
+				gameEnd();
+			}
+			if(destinList.isEmpty() == false) clearDestinations(destinList);
+			if(previous != null) previous.deselect();
+			previous = null;
+			chance ^= 1;
+			if(!end /*&& timer != null*/){
+				//reset timer
+				// if(Board.move == Board.WHITE_MOVE) Board.move = Board.BLACK_MOVE;
+				// else Board.move = Board.WHITE_MOVE;
+				Board.move = Board.WHITE_MOVE;//?
+			}
 		}
 	}
 
@@ -544,7 +567,7 @@ public class Board extends JFrame implements MouseListener{
 	/**
 	 * run when game is terminated
 	 */
-	private void gameEnd() {
+	public void gameEnd() {
 		String winMsg = "The ";
     	clearDestinations(destinList);
     	if(previous != null) previous.removePiece();
@@ -564,8 +587,8 @@ public class Board extends JFrame implements MouseListener{
 		end = true;
 		Settings.updatePlayersMenuStats(""+whitePlayer.getGamesWon(), ""+whitePlayer.getWinPercent(), ""+blackPlayer.getGamesWon(), ""+blackPlayer.getWinPercent());
 		//save player data
-		Player.setActiveWhite(whitePlayer.getUsername());
-		Player.setActiveBlack(blackPlayer.getUsername());
+		User.setActiveWhite(whitePlayer.getUsername());
+		User.setActiveBlack(blackPlayer.getUsername());
 		whitePlayer.savePlayerData();
 		blackPlayer.savePlayerData();
 		//show winner

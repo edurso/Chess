@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import chess.Game;
-import user.Player;
+import user.User;
 
 /**
  * Settings menu - accessed in game by clicking settings on main screen
@@ -53,17 +53,17 @@ public class Settings extends JPanel implements ItemListener {
     /**
      * map of all players indexed to their usernames
      */
-    private HashMap<String, Player> players;
+    private HashMap<String, User> players;
 
     /**
      * selected white player
      */
-    private static Player activeWhitePlayer;
+    private static User activeWhitePlayer;
 
     /**
      * selected black player
      */
-    private static Player activeBlackPlayer;
+    private static User activeBlackPlayer;
 
     /**
      * drop-down menu of white players
@@ -188,14 +188,14 @@ public class Settings extends JPanel implements ItemListener {
     	
         super(new GridLayout(3, 1)); 
 
-        ArrayList<Player> temp = Player.getPlayers();
+        ArrayList<User> temp = User.getPlayers();
         players = new HashMap<>();
         whiteUsrNames = new ArrayList<>();
         blackUsrNames = new ArrayList<>();
         whiteUsrNames.clear();
         blackUsrNames.clear();
         for(int i = 0 ; i < temp.size() ; i++) {
-            Player p = temp.get(i);
+            User p = temp.get(i);
             players.put(p.getUsername(), p);
             whiteUsrNames.add(p.getUsername());
             blackUsrNames.add(p.getUsername());
@@ -205,8 +205,8 @@ public class Settings extends JPanel implements ItemListener {
 //        if(s!=null && s.length()!=0)System.out.println(s);
 //        else System.out.println("its null bro");
         
-        activeBlackPlayer = players.get(Player.getActiveBlack());
-        activeWhitePlayer = players.get(Player.getActiveWhite());
+        activeBlackPlayer = players.get(User.getActiveBlack());
+        activeWhitePlayer = players.get(User.getActiveWhite());
         
         initMenuThings();
         
@@ -240,13 +240,13 @@ public class Settings extends JPanel implements ItemListener {
      * retrieves the selected white player
      * @return the active white player
      */
-    public static Player getActiveWhitePlayer(){ return activeWhitePlayer; }
+    public static User getActiveWhitePlayer(){ return activeWhitePlayer; }
     
     /**
      * retrieves the selected black player
      * @return the active black player
      */
-    public static Player getActiveBlackPlayer(){ return activeBlackPlayer; }
+    public static User getActiveBlackPlayer(){ return activeBlackPlayer; }
 
     /**
      * initializes and reveals the window for selecting players
@@ -254,11 +254,11 @@ public class Settings extends JPanel implements ItemListener {
     private void initPlayerSelect(){
 
     	players.clear();
-        ArrayList<Player> temp = Player.getPlayers();
+        ArrayList<User> temp = User.getPlayers();
         whiteUsrNames.clear();
         blackUsrNames.clear();
         for(int i = 0 ; i < temp.size() ; i++) {
-            Player p = temp.get(i);
+            User p = temp.get(i);
             players.put(p.getUsername(), p);
             whiteUsrNames.add(p.getUsername());
             blackUsrNames.add(p.getUsername());
@@ -399,7 +399,7 @@ public class Settings extends JPanel implements ItemListener {
         save.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
                 String un = input.getText();
-                Player p = new Player(un);
+                User p = new User(un);
                 p.savePlayerData();
                 f.dispose();
                 initPlayerSelect();

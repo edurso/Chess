@@ -30,7 +30,7 @@ public enum GameStyle {
 	 * NOT YET SUPPORTED
 	 * Multiplayer game on different computers
 	 */
-	MULTI_ONLINE(4), //TODO - implement???
+	MULTI_ONLINE(4),
 	
 	/**
 	 * Error, if no other game mode specified

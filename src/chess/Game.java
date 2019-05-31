@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import start.*;
+import user.SimpleAI;
 
 /**
  * Class that runs the game
@@ -46,7 +47,7 @@ public class Game {
 	/**
 	 * board used for game
 	 */
-	private static Board board;
+	public static Board board;
 
 	/**
 	 * starts the game at the menu
@@ -63,7 +64,8 @@ public class Game {
 		
 		switch(style) {
 			case SINGLE_EASY:
-				
+				board = new Board(Settings.getActiveWhitePlayer(), new SimpleAI());
+				board.play();
 				break;
 			case SINGLE_MED:
 				

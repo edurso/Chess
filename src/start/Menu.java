@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import chess.Game;
 import chess.GameStyle;
-import user.Player;
+import user.User;
 
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -147,13 +147,13 @@ public class Menu extends JFrame{
 	 * gets active players from the list of players
 	 * @return the player who is playing on the white side
 	 */
-	public static Player getActiveWhitePlayer() { return Settings.getActiveWhitePlayer(); }
+	public static User getActiveWhitePlayer() { return Settings.getActiveWhitePlayer(); }
 	
 	/**
 	 * gets active players from the list of players
 	 * @return the player who is playing on the black side
 	 */
-	public static Player getActiveBlackPlayer() { return Settings.getActiveBlackPlayer(); }
+	public static User getActiveBlackPlayer() { return Settings.getActiveBlackPlayer(); }
 	
 	/**
 	 * Configures the components for the main menu

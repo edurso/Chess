@@ -32,12 +32,12 @@ public class ChessSquare extends JPanel implements Cloneable{
 	/**
 	 * x position of the square on the board
 	 */
-	int x;
+	public int x;
 	
 	/**
 	 * y position of the square on the board
 	 */
-	int y;
+	public int y;
 	
 	/**
 	 * if the square is selected by a player
@@ -93,8 +93,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	 */
 	public void setPiece(Piece piece) {
 		this.piece = piece;
-		ImageIcon img = new ImageIcon(getClass().getResource(piece.getPath()));
-		if(piece.getPath() != null) img = new ImageIcon(getClass().getResource(piece.getPath()));
+		ImageIcon img = null;// = new ImageIcon(getClass().getResource(piece.getPath()));
+		if(piece != null && piece.getPath() != null) img = new ImageIcon(getClass().getResource(piece.getPath()));
 		content = new JLabel(img);
 		this.add(content);
 		content.paint(null);
@@ -110,11 +110,15 @@ public class ChessSquare extends JPanel implements Cloneable{
 	 */
 	public void removePiece() {
 		if (piece instanceof King) {
+			this.setVisible(false);
 			piece = null;
 			this.remove(content);
+			this.setVisible(true);
 		} else {
+			this.setVisible(false);
 			piece = null;
 			this.remove(content);
+			this.setVisible(true);
 		}
 	}
 	
