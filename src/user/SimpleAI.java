@@ -40,16 +40,17 @@ public class SimpleAI extends AI {
 		System.out.println("X: " + from.x + "\nY: " + from.y + "\n");
 		setTo(boardState);
 		int c = 0;
-		while(to == null){
-			System.out.println("oops, i really did try");
-			setFrom(boardState);
-			setTo(boardState);
-			c++;
-			if(c > 1000) {
-				Game.board.gameEnd();
-				System.out.println("AI give up");
-			}
-		}
+		// while(to == null){
+		// 	System.out.println("oops, i really did try");
+		// 	setFrom(boardState);
+		// 	setTo(boardState);
+		// 	if(from.getPiece() != null && to != null) break;
+		// 	c++;
+		// 	if(c > 1000) {
+		// 		Game.board.gameEnd();
+		// 		System.out.println("AI give up");
+		// 	}
+		// }
 		if(to == null) {
 			System.out.println(":( thats unfortunate ):");
 			selectMove(boardState);
