@@ -2,6 +2,7 @@ package chess;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -177,6 +178,11 @@ public class Board extends JFrame implements MouseListener{
 	 * Stores players turn as int
 	 */
 	private int chance;
+	
+	/**
+	 * holds buttons
+	 */
+	private JPanel pp;
 
 	/**
 	 * list of possible destinations of selected piece
@@ -212,6 +218,9 @@ public class Board extends JFrame implements MouseListener{
 	 * button restarts the game
 	 */
 	private static JButton restartButton;
+	
+	
+	private static JButton stalemateButton;
 
 	/**
 	 * button exits the application
@@ -259,16 +268,79 @@ public class Board extends JFrame implements MouseListener{
 			wp[i] = new Pawn(("WP0" + (i + 1)), "whitePawn.png", Piece.COLOR_WHITE);
 			bp[i] = new Pawn(("BP0" + (i + 1)), "blackPawn.png", Piece.COLOR_BLACK);
 		}
+		//JFrame code
+		
+		
+		setTitle("Chess");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(800, 400);
+		setResizable(false);
+		
+		//optionpanel settings
+		
+		
+		optionPanel = new JPanel(new GridLayout(1, 2));
+		optionPanel.setBounds(0, 0, 1200, 900);
+		add(optionPanel);
+		
+		//board settings
+		
 		
 		board = new JPanel(new GridLayout(8, 8));
-		
-		optionPanel = new JPanel();
-		
+		board.setBounds(0, 0, 800, 800);
+		pp = new JPanel();
+		optionPanel.add(board);
 		boardState = new ChessSquare[8][8];
 		
 		this.whitePlayer = whitePlayer;
 		this.blackPlayer = blackPlayer;
 		
+
+		Font f = new Font("TimesRoman", Font.PLAIN, 20);
+		
+		restartButton = new JButton("Restart");
+		restartButton.setLocation(810, 200);
+		restartButton.setSize(200, 80);
+		restartButton.setBackground(Color.RED);
+		restartButton.setFont(f);
+		pp.add(restartButton);
+		restartButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Game.menu.start();
+				
+			}
+		});
+	    
+	    quitButton = new JButton("Quit");
+	    quitButton.setLocation(810, 100);
+	    quitButton.setSize(200, 80);
+	    quitButton.setBackground(Color.RED);
+	    quitButton.setFont(f);
+	    pp.add(quitButton);
+	    quitButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0); 
+			}
+		});
+	    
+	    stalemateButton = new JButton("Stalemate");
+	    stalemateButton.setLocation(810, 300);
+	    stalemateButton.setSize(200, 80);
+	    stalemateButton.setBackground(Color.RED);
+	    stalemateButton.setFont(f);
+	    pp.add(stalemateButton);
+	    stalemateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				initWinWindow("You Pathetic Losers Tied");
+				revealWinWindow();
+			}
+		});
+	    
+	    optionPanel.add(pp);
+	    
+	    
 		Piece P;
 		for(int i = 0 ; i < 8 ; i++) {
 			for(int j = 0 ; j < 8 ; j++) {	
@@ -299,14 +371,9 @@ public class Board extends JFrame implements MouseListener{
 			}
 		}
 		
-		setTitle("Chess");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(1200, 825);
-		setResizable(false);
-		add(board);
-		board.setBounds(0, 0, 800, 800);
-		add(optionPanel);
-		optionPanel.setBounds(800, 0, 400, 825);
+		
+
+		
 		
 	}
 	
@@ -315,6 +382,9 @@ public class Board extends JFrame implements MouseListener{
 	 */
 	public void play() {
 		setVisible(true);
+		
+		
+	    
 		//System.out.println(Settings.getActiveWhitePlayer().getUsername());
 		//System.out.println("Piece at 0, 0 is ... " + boardState[0][0].getPiece().getPath());//just for testing
 	}
