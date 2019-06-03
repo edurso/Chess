@@ -7,9 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -33,7 +35,7 @@ public class Settings extends JPanel implements ItemListener {
     /**
 	* Checkbox that enables and disables the music
 	*/
-	private JCheckBox music;
+	private JButton music;
 
 	/**
 	* Clip for the audio file
@@ -440,11 +442,12 @@ public class Settings extends JPanel implements ItemListener {
         selectPlayerButton.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) { initPlayerSelect(); } });        
         selPlayerP.add(selectPlayerButton);
         
-		music = new JCheckBox("Enable Music");
-		music.setBounds(450,500,100,50);	
-		music.setBorderPaintedFlat(false);
-        music.setBackground(Color.RED);
+		music = new JButton("Enable Music");
+		music.setBounds(450,500,100,50);
+        music.setBackground(Color.BLACK);
+        music.setForeground(Color.RED);
         music.setFont(Menu.f);
+        music.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {play();}});
         
         whiteDubs = new JTextField();
         whiteDubs.setEditable(false);
@@ -537,6 +540,42 @@ public class Settings extends JPanel implements ItemListener {
         this.add(playerPanel);
         this.add(musicPanel);
         this.add(goHome);
+    }
+
+    /**
+     * Method to play music
+     */
+    private void play() {
+    	//count++;
+    	try {
+    		clip = AudioSystem.getClip();
+    		clip.open(AudioSystem.getAudioInputStream(new File("src/start/music.wav")));
+    		clip.loop(Clip.LOOP_CONTINUOUSLY);
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	if(clip.isRunning()) {
+    		stopMusic(clip);
+    	}
+    	else {
+    		startMusic(clip);
+    	}
+    	
+    }
+    
+    /**
+     * Method that starts music
+     */
+    private void startMusic(Clip c) {
+    	c.start();
+    }
+    
+    /**
+     * Method that stops music
+     */
+    private void stopMusic(Clip c) {
+    	c.stop();
     }
 
 }

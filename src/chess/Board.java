@@ -2,6 +2,8 @@ package chess;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -143,12 +145,12 @@ public class Board extends JFrame implements MouseListener{
 	/**
 	 * White player object
 	 */
-	private Player whitePlayer = null;
+	Player whitePlayer = null;
 	
 	/**
 	 * Black player object
 	 */
-	private Player blackPlayer = null;
+	Player blackPlayer = null;
 	
 	/**
 	 * graphic container for board
@@ -179,6 +181,11 @@ public class Board extends JFrame implements MouseListener{
 	 * Stores players turn as int
 	 */
 	private int chance;
+	
+	/**
+	 * holds buttons
+	 */
+	private JPanel pp;
 
 	/**
 	 * list of possible destinations of selected piece
@@ -214,11 +221,16 @@ public class Board extends JFrame implements MouseListener{
 	 * button restarts the game
 	 */
 	private static JButton restartButton;
+	
+	
+	private static JButton stalemateButton;
 
 	/**
 	 * button exits the application
 	 */
 	private static JButton quitButton;
+
+	public static Color color = new Color(102, 158, 249);
 
 	/**
 	 * initializes board and pieces
@@ -261,16 +273,150 @@ public class Board extends JFrame implements MouseListener{
 			wp[i] = new Pawn(("WP0" + (i + 1)), "whitePawn.png", Piece.COLOR_WHITE);
 			bp[i] = new Pawn(("BP0" + (i + 1)), "blackPawn.png", Piece.COLOR_BLACK);
 		}
+		//JFrame code
 		
+		
+		setTitle("Chess");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(800, 400);
+		setResizable(false);
+		
+		optionPanel = new JPanel(new GridLayout(1, 2));
+		optionPanel.setBounds(0, 0, 1200, 900);
+		add(optionPanel);
+
 		board = new JPanel(new GridLayout(8, 8));
-		
-		optionPanel = new JPanel();
-		
+		board.setBounds(0, 0, 800, 800);
+		pp = new JPanel();
+		optionPanel.add(board);
 		boardState = new ChessSquare[8][8];
 		
 		this.whitePlayer = whitePlayer;
 		this.blackPlayer = blackPlayer;
+
+		Font f = new Font("TimesRoman", Font.PLAIN, 20);
+
+		JTextField whiteDubs = new JTextField();
+        whiteDubs.setEditable(false);
+        whiteDubs.setBackground(color);
+        JTextField whiteDubPercent = new JTextField();
+        whiteDubPercent.setEditable(false);
+		whiteDubPercent.setBackground(color);
 		
+        JTextField blackDubs = new JTextField();
+        blackDubs.setEditable(false);
+        blackDubs.setBackground(color);
+        JTextField blackDubPercent = new JTextField();
+        blackDubPercent.setEditable(false);
+        blackDubPercent.setBackground(color);
+        
+        JPanel whiteStats = new JPanel(new GridLayout(2, 2));
+        JLabel whiteDubsLabel = new JLabel("Wins: ");
+		whiteDubsLabel.setBackground(color);
+		Player activeWhitePlayer = Settings.getActiveWhitePlayer();
+        if(activeWhitePlayer == null) whiteDubs.setText("Unavailable");
+        else whiteDubs.setText(""+activeWhitePlayer.getGamesWon());
+        JLabel whiteDubPercentLabel = new JLabel("Win Percent: ");
+        whiteDubPercentLabel.setBackground(color);
+        if(activeWhitePlayer == null) whiteDubPercent.setText("Unavailable");
+        else whiteDubPercent.setText(""+activeWhitePlayer.getWinPercent());
+        whiteStats.add(whiteDubsLabel);
+        whiteStats.add(whiteDubs);
+        whiteStats.add(whiteDubPercentLabel);
+        whiteStats.add(whiteDubPercent);
+        
+        JPanel blackStats = new JPanel(new GridLayout(2, 2));
+        JLabel blackDubsLabel = new JLabel("Wins: ");
+		blackDubsLabel.setBackground(Color.RED);
+		Player activeBlackPlayer = Settings.getActiveBlackPlayer();
+        if(activeBlackPlayer == null) blackDubs.setText("Unavailable");
+        else blackDubs.setText(""+activeBlackPlayer.getGamesWon());
+        JLabel blackDubPercentLabel = new JLabel("Win Percent: ");
+        blackDubPercentLabel.setBackground(color);
+        if(activeBlackPlayer == null) blackDubPercent.setText("Unavailable");
+        else blackDubPercent.setText(""+activeBlackPlayer.getWinPercent());
+        blackStats.add(blackDubsLabel);
+        blackStats.add(blackDubs);
+        blackStats.add(blackDubPercentLabel);
+        blackStats.add(blackDubPercent);
+        
+        JTextField swp = new JTextField();
+        swp.setEditable(false);
+        if(activeWhitePlayer == null) swp.setText("GuestWhitePlayer");
+        else swp.setText(activeWhitePlayer.getUsername());
+        swp.setBackground(color);
+        
+        JTextField sbp = new JTextField();
+        sbp.setEditable(false);
+        if(activeBlackPlayer == null) sbp.setText("GuestBlackPlayer");
+        else sbp.setText(activeBlackPlayer.getUsername());
+        sbp.setBackground(color);
+        
+        JPanel whitePlayerInfo = new JPanel(new GridLayout(2, 1));
+        whitePlayerInfo.setBackground(color);
+        JLabel whiteHeader = new JLabel("Active White Player: ");
+        whitePlayerInfo.add(whiteHeader);
+        whitePlayerInfo.add(swp);
+        whitePlayerInfo.add(whiteStats);
+        
+        JPanel blackPlayerInfo = new JPanel(new GridLayout(2, 1));
+        blackPlayerInfo.setBackground(color);
+        JLabel blackHeader = new JLabel("Active Black Player: ");
+        blackPlayerInfo.add(blackHeader);
+        blackPlayerInfo.add(sbp);
+        blackPlayerInfo.add(blackStats);
+
+        JPanel playerPanel = new JPanel(new GridLayout(1, 2));
+        playerPanel.setBackground(color);
+        pp.add(whitePlayerInfo);
+        pp.add(blackPlayerInfo);
+
+		pp.setBackground(color);
+		
+		restartButton = new JButton("Restart");
+		restartButton.setLocation(810, 200);
+		restartButton.setSize(200, 80);
+		restartButton.setBackground(color);
+		restartButton.setFont(f);
+		pp.add(restartButton);
+		restartButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Game.menu.start();
+			}
+		});
+	    
+	    quitButton = new JButton("Quit");
+	    quitButton.setLocation(810, 100);
+	    quitButton.setSize(200, 80);
+	    quitButton.setBackground(color);
+		quitButton.setFont(f);
+	    pp.add(quitButton);
+	    quitButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0); 
+			}
+		});
+	    
+	    stalemateButton = new JButton("Stalemate");
+	    stalemateButton.setLocation(810, 300);
+	    stalemateButton.setSize(200, 80);
+	    stalemateButton.setBackground(color);
+	    stalemateButton.setFont(f);
+	    pp.add(stalemateButton);
+	    stalemateButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				initWinWindow("You Pathetic Losers Tied");
+				Game.board.blackPlayer.addGamePlayed(false);
+				Game.board.whitePlayer.addGamePlayed(false);
+				revealWinWindow();
+			}
+		});
+	    
+	    optionPanel.add(pp);
+	    
+	    
 		Piece P;
 		for(int i = 0 ; i < 8 ; i++) {
 			for(int j = 0 ; j < 8 ; j++) {	
@@ -300,16 +446,7 @@ public class Board extends JFrame implements MouseListener{
 				boardState[i][j] = cs;
 			}
 		}
-		
-		setTitle("Chess");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(1200, 825);
-		setResizable(false);
-		add(board);
-		board.setBounds(0, 0, 800, 800);
-		add(optionPanel);
-		optionPanel.setBounds(800, 0, 400, 825);
-		
+
 	}
 	
 	/**
@@ -317,6 +454,9 @@ public class Board extends JFrame implements MouseListener{
 	 */
 	public void play() {
 		setVisible(true);
+		
+		
+	    
 		//System.out.println(Settings.getActiveWhitePlayer().getUsername());
 		//System.out.println("Piece at 0, 0 is ... " + boardState[0][0].getPiece().getPath());//just for testing
 	}
@@ -355,7 +495,7 @@ public class Board extends JFrame implements MouseListener{
 				clearDestinations(destinList);
 				destinList.clear();
 				previous = null;
-			} else if(c.getPiece() == null || ( (c.getPiece() != null) && (previous.getPiece().getColor() != c.getPiece().getColor()))) {//null pointer?
+			} else if(c.getPiece() == null || ( (c.getPiece() != null) && (previous.getPiece().getColor() != c.getPiece().getColor()))) {
 				if(c.isPossibleDestination()) {
 					if(c.getPiece() != null) c.removePiece();
 					c.setPiece(previous.getPiece());
@@ -425,9 +565,7 @@ public class Board extends JFrame implements MouseListener{
 			else Board.move = Board.WHITE_MOVE;
 		}
 		if(Board.move == Board.BLACK_MOVE && blackPlayer instanceof AI) {
-			//System.out.println("here");//?????????????????????????????
 			blackPlayer.move(boardState);
-			// changeChance();
 			//cleanup
 			if (boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) {
 				chance ^= 1;
@@ -439,9 +577,7 @@ public class Board extends JFrame implements MouseListener{
 			chance ^= 1;
 			if(!end /*&& timer != null*/){
 				//reset timer
-				// if(Board.move == Board.WHITE_MOVE) Board.move = Board.BLACK_MOVE;
-				// else Board.move = Board.WHITE_MOVE;
-				Board.move = Board.WHITE_MOVE;//?
+				Board.move = Board.WHITE_MOVE;
 			}
 		}
 	}
@@ -620,7 +756,7 @@ public class Board extends JFrame implements MouseListener{
 		winPanel = new JPanel();
 		winPanel.setBackground(Color.black);
 		winFrame.setTitle("Chess");
-		winFrame.setBounds(500, 500, 300, 250);
+		winFrame.setBounds(100, 100, 450, 250);
 		winText = new JTextField();
 		winText.setText(msg);
 		winText.setEditable(false);

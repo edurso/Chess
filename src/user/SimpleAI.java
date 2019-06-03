@@ -25,7 +25,7 @@ public class SimpleAI extends AI {
 		try {
 			to = dList.get( (int) (Math.random() * dList.size()) );
 		} catch (Exception e) {
-			System.out.println("problem");
+			//System.out.println("problem");
 			setFrom(boardState);
 		}
 	}
@@ -35,24 +35,13 @@ public class SimpleAI extends AI {
 		dList = new ArrayList<>();
 		setFrom(boardState);
 		if(from != null) dList = from.getPiece().move(boardState, from.x, from.y);
-		else System.out.println("no");
+		//else System.out.println("no");
 		//TODO - FILTER DLIST
-		System.out.println("X: " + from.x + "\nY: " + from.y + "\n");
+		//System.out.println("X: " + from.x + "\nY: " + from.y + "\n");
 		setTo(boardState);
 		int c = 0;
-		// while(to == null){
-		// 	System.out.println("oops, i really did try");
-		// 	setFrom(boardState);
-		// 	setTo(boardState);
-		// 	if(from.getPiece() != null && to != null) break;
-		// 	c++;
-		// 	if(c > 1000) {
-		// 		Game.board.gameEnd();
-		// 		System.out.println("AI give up");
-		// 	}
-		// }
 		if(to == null) {
-			System.out.println(":( thats unfortunate ):");
+			//System.out.println(":( thats unfortunate ):");
 			selectMove(boardState);
 		}
 	}
