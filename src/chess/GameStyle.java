@@ -9,28 +9,18 @@ public enum GameStyle {
 	/**
 	 * Single player game against an easy AI
 	 */
-	SINGLE_EASY(0),
-	
-	/**
-	 * Single player game against a moderately difficult AI
-	 */
-	SINGLE_MED(1),
-	
-	/**
-	 * Single player game against a hard AI
-	 */
-	SINGLE_HARD(2),
+	SINGLE(0),
 	
 	/**
 	 * Multiplayer game on the local device
 	 */
-	MULTI_LOCAL(3),
+	MULTI_LOCAL(1),
 	
 	/**
 	 * NOT YET SUPPORTED
 	 * Multiplayer game on different computers
 	 */
-	MULTI_ONLINE(4),
+	MULTI_ONLINE(2),
 	
 	/**
 	 * Error, if no other game mode specified

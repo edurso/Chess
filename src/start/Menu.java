@@ -49,21 +49,6 @@ public class Menu extends JFrame{
 	private JButton back;
 	
 	/**
-	 * Button that launches an easy single player game
-	 */
-	private JButton easy;
-	
-	/**
-	 * Button that launches a medium single player game
-	 */
-	private JButton medium;
-	
-	/**
-	 * Button that launches a hard single player game
-	 */
-	private JButton hard;
-	
-	/**
 	 * Button that launches a local multiplayer game
 	 */
 	private JButton local;
@@ -77,23 +62,18 @@ public class Menu extends JFrame{
 	 * Container for main menu buttons
 	 */
 	private JPanel menuPanel;
-	
-	/**
-	 * Container for single player buttons
-	 */
-    private JPanel singlePanel;
     
     /**
      * Container for multiplayer buttons
      */
-    private JPanel multiPanel;
+   	private JPanel multiPanel;
     
-    /**
+   	/**
      * Container for settings components
      */
-    private JPanel settingsPanel;
+	private JPanel settingsPanel;
 	
-    /**
+   	/**
      * Image for the background of the menu
      */
 	private JLabel background;
@@ -108,39 +88,35 @@ public class Menu extends JFrame{
      */
     public static Font f = new Font("TimesRoman", Font.PLAIN, 20);
     
-    /**
+   	/**
      * Starts the menu at the main screen of the application
      */
 	public void start() {
-		
-		
+
 		setTitle("Chess");
 		
 		menuPanel = new JPanel();
-	    menuPanel.setLayout(null);
+	   	menuPanel.setLayout(null);
+	   
+	   	multiPanel = new JPanel();
+	   	multiPanel.setLayout(null);
 	    
-	    singlePanel = new JPanel();
-	    singlePanel.setLayout(null);
+	   	settingsPanel = new JPanel();
+	   	settingsPanel.setLayout(null);
 	    
-	    multiPanel = new JPanel();
-	    multiPanel.setLayout(null);
-	    
-	    settingsPanel = new JPanel();
-	    settingsPanel.setLayout(null);
-	    
-	    getContentPane().add(menuPanel);
-	    ImageIcon image = new ImageIcon(getClass().getResource("chess_background.png")); 
+	   	getContentPane().add(menuPanel);
+	   	ImageIcon image = new ImageIcon(getClass().getResource("chess_background.png")); 
 		background = new JLabel(image, JLabel.CENTER);
 		background.setBounds(0,0,1000,1204);
 
-	    initMainMenuButtons();
+	   	initMainMenuButtons();
 	    
-	    settings = new Settings();
-	    
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setSize(1000,1204);
-	    setResizable(false);
-	    setVisible(true);
+	   	settings = new Settings();
+	   
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1000,1204);
+	   	setResizable(false);
+	   	setVisible(true);
 	}
 	
 	/**
@@ -160,7 +136,7 @@ public class Menu extends JFrame{
 	 */
 	private void initMainMenuButtons() {
 
-		quitButton = new JButton("Quit");
+	    quitButton = new JButton("Quit");
 	    quitButton.setBounds(400,800,200,80);
 	    quitButton.setBackground(Color.RED);
 	    quitButton.setFont(f);
@@ -193,11 +169,8 @@ public class Menu extends JFrame{
 	    menuPanel.add(singleButton);
 	    singleButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			getContentPane().removeAll();
-			getContentPane().add(singlePanel);
-			initSingleplayerButtons();
-		    setVisible(true);
+				dispose();
+				Game.run(GameStyle.SINGLE);
 			}
 		});
 	    
@@ -238,51 +211,6 @@ public class Menu extends JFrame{
 		settingsPanel.add(background);
 		background.setVisible(true);
 		count++;
-	}
-	
-	/**
-	 * Configures the components for the single player menu
-	 */
-	private void initSingleplayerButtons() {
-		
-		easy = new JButton("Easy");
-		easy.setBounds(400,350,200,80);
-	    easy.setBackground(Color.RED);
-	    easy.setFont(f);
-	    singlePanel.add(easy);
-	    easy.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				Game.run(GameStyle.SINGLE_EASY);
-			}
-		});
-	    
-	    medium = new JButton("Medium");
-	    medium.setBounds(400,500,200,80);
-	    medium.setBackground(Color.RED);
-	    medium.setFont(f);
-	    singlePanel.add(medium);
-	    medium.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				Game.run(GameStyle.SINGLE_MED); 
-			}
-		});
-	    
-	    hard = new JButton("Hard");
-	    hard.setBounds(400,650,200,80);
-	    hard.setBackground(Color.RED);
-	    hard.setFont(f);
-	    singlePanel.add(hard);
-	    hard.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				Game.run(GameStyle.SINGLE_HARD); 
-			}
-		});
-	    addBack(singlePanel);
-	    singlePanel.add(background);
-		background.setVisible(true);
 	}
 	
 	/**

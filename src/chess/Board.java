@@ -355,7 +355,7 @@ public class Board extends JFrame implements MouseListener{
 				clearDestinations(destinList);
 				destinList.clear();
 				previous = null;
-			} else if(c.getPiece() == null || ( (c.getPiece() != null) && (previous.getPiece().getColor() != c.getPiece().getColor()))) {//null pointer?
+			} else if(c.getPiece() == null || ( (c.getPiece() != null) && (previous.getPiece().getColor() != c.getPiece().getColor()))) {
 				if(c.isPossibleDestination()) {
 					if(c.getPiece() != null) c.removePiece();
 					c.setPiece(previous.getPiece());
@@ -425,9 +425,7 @@ public class Board extends JFrame implements MouseListener{
 			else Board.move = Board.WHITE_MOVE;
 		}
 		if(Board.move == Board.BLACK_MOVE && blackPlayer instanceof AI) {
-			//System.out.println("here");//?????????????????????????????
 			blackPlayer.move(boardState);
-			// changeChance();
 			//cleanup
 			if (boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) {
 				chance ^= 1;
@@ -439,9 +437,7 @@ public class Board extends JFrame implements MouseListener{
 			chance ^= 1;
 			if(!end /*&& timer != null*/){
 				//reset timer
-				// if(Board.move == Board.WHITE_MOVE) Board.move = Board.BLACK_MOVE;
-				// else Board.move = Board.WHITE_MOVE;
-				Board.move = Board.WHITE_MOVE;//?
+				Board.move = Board.WHITE_MOVE;
 			}
 		}
 	}

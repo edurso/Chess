@@ -63,22 +63,16 @@ public class Game {
 		initErrorWindow();
 		
 		switch(style) {
-			case SINGLE_EASY:
+			case SINGLE:
 				board = new Board(Settings.getActiveWhitePlayer(), new SimpleAI());
 				board.play();
-				break;
-			case SINGLE_MED:
-				
-				break;
-			case SINGLE_HARD:
-				
 				break;
 			case MULTI_LOCAL:
 				board = new Board(Settings.getActiveWhitePlayer(), Settings.getActiveBlackPlayer());
 				board.play();
 				break;
 			case MULTI_ONLINE:
-				errorFrame.setVisible(true);
+				OnlineMenu.launch();
 				break;
 			default:
 				errorFrame.setVisible(true);
