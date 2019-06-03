@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import start.*;
+import user.SimpleAI;
 
 /**
  * Class that runs the game
@@ -46,7 +47,7 @@ public class Game {
 	/**
 	 * board used for game
 	 */
-	private static Board board;
+	public static Board board;
 
 	/**
 	 * starts the game at the menu
@@ -62,21 +63,16 @@ public class Game {
 		initErrorWindow();
 		
 		switch(style) {
-			case SINGLE_EASY:
-				
-				break;
-			case SINGLE_MED:
-				
-				break;
-			case SINGLE_HARD:
-				
+			case SINGLE:
+				board = new Board(Settings.getActiveWhitePlayer(), new SimpleAI());
+				board.play();
 				break;
 			case MULTI_LOCAL:
 				board = new Board(Settings.getActiveWhitePlayer(), Settings.getActiveBlackPlayer());
 				board.play();
 				break;
 			case MULTI_ONLINE:
-				errorFrame.setVisible(true);
+				OnlineMenu.launch();
 				break;
 			default:
 				errorFrame.setVisible(true);

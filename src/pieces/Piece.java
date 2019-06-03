@@ -36,7 +36,7 @@ public abstract class Piece extends JLabel implements Cloneable{
 	/**
 	 * file path to piece graphic
 	 */
-	private String path;
+	private String path = null;
 	
 	/**
 	 * list of possible moves the piece can make
