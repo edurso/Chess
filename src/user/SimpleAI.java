@@ -8,6 +8,7 @@ import chess.Game;
 import pieces.King;
 import pieces.Piece;
 
+//TODO - second time it does not play properly.
 //TODO - it declares loss on check i think - pls fix
 //TODO - need to stop it from replacing its own pieces - filtering destinations might help
 public class SimpleAI extends AI {
