@@ -202,11 +202,7 @@ public class Settings extends JPanel implements ItemListener {
             whiteUsrNames.add(p.getUsername());
             blackUsrNames.add(p.getUsername());
         }
-        
-//        String s = Player.getActiveBlack();
-//        if(s!=null && s.length()!=0)System.out.println(s);
-//        else System.out.println("its null bro");
-        
+
         activeBlackPlayer = players.get(User.getActiveBlack());
         activeWhitePlayer = players.get(User.getActiveWhite());
         
@@ -546,36 +542,26 @@ public class Settings extends JPanel implements ItemListener {
      * Method to play music
      */
     private void play() {
-    	//count++;
     	try {
     		clip = AudioSystem.getClip();
     		clip.open(AudioSystem.getAudioInputStream(new File("src/start/music.wav")));
     		clip.loop(Clip.LOOP_CONTINUOUSLY);
+    	} catch(Exception e) {
+            Game.setErrorText("error finding music file");
+            Game.revealErrorWindow();
     	}
-    	catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	if(clip.isRunning()) {
-    		stopMusic(clip);
-    	}
-    	else {
-    		startMusic(clip);
-    	}
-    	
+    	if(clip.isRunning()) stopMusic(clip);
+    	else startMusic(clip);    	
     }
     
     /**
      * Method that starts music
      */
-    private void startMusic(Clip c) {
-    	c.start();
-    }
+    private void startMusic(Clip c) { c.start(); }
     
     /**
      * Method that stops music
      */
-    private void stopMusic(Clip c) {
-    	c.stop();
-    }
+    private void stopMusic(Clip c) { c.stop(); }
 
 }

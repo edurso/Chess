@@ -245,7 +245,7 @@ public class Board extends JFrame implements MouseListener{
 
 		chance = Piece.COLOR_WHITE;
 
-		end = false;//true if game has ended
+		end = false;
 
 		destinList = new ArrayList<>();
 		
@@ -274,13 +274,10 @@ public class Board extends JFrame implements MouseListener{
 			wp[i] = new Pawn(("WP0" + (i + 1)), "whitePawn.png", Piece.COLOR_WHITE);
 			bp[i] = new Pawn(("BP0" + (i + 1)), "blackPawn.png", Piece.COLOR_BLACK);
 		}
-		//JFrame code
-		
-		
+
 		setTitle("Chess");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 400);
-		setResizable(false);
 		
 		optionPanel = new JPanel(new GridLayout(1, 2));
 		optionPanel.setBounds(0, 0, 1200, 900);
@@ -416,7 +413,6 @@ public class Board extends JFrame implements MouseListener{
 	    
 	    optionPanel.add(pp);
 	    
-	    
 		Piece P;
 		for(int i = 0 ; i < 8 ; i++) {
 			for(int j = 0 ; j < 8 ; j++) {	
@@ -451,14 +447,7 @@ public class Board extends JFrame implements MouseListener{
 	/**
 	 * reveals the game board and allows the game to be played
 	 */
-	public void play() {
-		setVisible(true);
-		
-		
-	    
-		//System.out.println(Settings.getActiveWhitePlayer().getUsername());
-		//System.out.println("Piece at 0, 0 is ... " + boardState[0][0].getPiece().getPath());//just for testing
-	}
+	public void play() { setVisible(true); }
 
 	/**
 	 * retrieves the king of the designated color
@@ -565,7 +554,6 @@ public class Board extends JFrame implements MouseListener{
 		}
 		if(Board.move == Board.BLACK_MOVE && blackPlayer instanceof AI) {
 			blackPlayer.move(boardState);
-			//cleanup
 			if (boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) {
 				chance ^= 1;
 				gameEnd();

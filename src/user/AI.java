@@ -9,16 +9,37 @@ import pieces.Piece;
 
 public abstract class AI extends Player {
 
+	/**
+	 * place holder for square with piece
+	 */
 	protected ChessSquare from;
 	
+	/**
+	 * place holder for destination
+	 */
 	protected ChessSquare to;
 
+	/**
+	 * list of possible destinations
+	 */
 	protected List<ChessSquare> dList;
 
+	/**
+	 * calculates piece to move
+	 * @param boardState current state of the board
+	 */
 	protected abstract void setFrom(ChessSquare[][] boardState);
 
+	/**
+	 * calculates destination square
+	 * @param boardState current state of the board
+	 */
 	protected abstract void setTo(ChessSquare[][] boardState);
 
+	/**
+	 * selects the move
+	 * @param boardState current state of the board
+	 */
 	public abstract void selectMove(ChessSquare[][] boardState);
 
 	public void move(ChessSquare[][] boardState){
@@ -27,6 +48,12 @@ public abstract class AI extends Player {
 	}
 
 	//TODO - check filters & logic here
+	/**
+	 * updates the selected pieces based on the selected move
+	 * @param boardState current state of the board
+	 * @param from square containing the piece to be moved
+	 * @param to destination square
+	 */
 	protected void updatePieces(ChessSquare[][] boardState, ChessSquare from, ChessSquare to) {
 		if(to.getPiece() != null) to.removePiece();
 		to.setPiece(from.getPiece());

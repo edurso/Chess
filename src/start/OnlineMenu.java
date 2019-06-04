@@ -12,22 +12,49 @@ import chess.Game;
 
 public class OnlineMenu extends JFrame{
 
+    /**
+     * the menu
+     */
     static OnlineMenu menu;
 
+    /**
+     * main - attaches to frame & container for everything
+     */
     JPanel main;
 
+    /**
+     * Container for components involving join a game
+     */
     JPanel join;
 
+    /**
+     * container for components involving creating a new game
+     */
     JPanel create;
 
+    /**
+     * button to join
+     */
     JButton joinIt;
 
+    /**
+     * button to create game
+     */
     JButton createNew;
 
+    /**
+     * button to go back to the main menu
+     */
     JButton cancel;
 
+    /**
+     * address input box
+     */
     JTextField joinAddress;
 
+    /**
+     * default connstructor sets everything up
+     */
     public OnlineMenu() {
         this.setVisible(false);
         this.setTitle("Chess Server Launch");
@@ -77,6 +104,9 @@ public class OnlineMenu extends JFrame{
         this.add(main);
     }
 
+    /**
+     * launches the menu
+     */
     public static void launch() {
         menu = new OnlineMenu();
         menu.setVisible(true);

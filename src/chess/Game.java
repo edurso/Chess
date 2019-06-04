@@ -50,6 +50,11 @@ public class Game {
 	public static Board board;
 
 	/**
+	 * ai
+	 */
+	public static SimpleAI aiboi = new SimpleAI();
+
+	/**
 	 * starts the game at the menu
 	 */
 	public static void start(){ menu.start(); }
@@ -64,7 +69,7 @@ public class Game {
 		
 		switch(style) {
 			case SINGLE:
-				board = new Board(Settings.getActiveWhitePlayer(), new SimpleAI());
+				board = new Board(Settings.getActiveWhitePlayer(), aiboi);
 				board.play();
 				break;
 			case MULTI_LOCAL:
