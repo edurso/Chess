@@ -544,7 +544,7 @@ public class Settings extends JPanel implements ItemListener {
     private void play() {
     	try {
     		clip = AudioSystem.getClip();
-    		clip.open(AudioSystem.getAudioInputStream(new File("src/start/music.wav")));
+    		clip.open(AudioSystem.getAudioInputStream(getClass().getResource("music.wav")));
     		clip.loop(Clip.LOOP_CONTINUOUSLY);
     	} catch(Exception e) {
             Game.setErrorText("error finding music file");
