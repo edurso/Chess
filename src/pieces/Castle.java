@@ -12,6 +12,8 @@ public class Castle extends Piece {
 
 	/**
 	 * constructor for the Castle class
+	 * pre: none
+	 * post: castle created
 	 * @param id    id for the castle
 	 * @param path  path to the graphic for the castle
 	 * @param color color for the castle

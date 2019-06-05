@@ -12,6 +12,8 @@ public class Bishop extends Piece {
 	
 	/**
 	 * constructor for the Bishop class
+	 * pre: none
+	 * post: bishop created
 	 * @param id    id for the Bishop
 	 * @param path  path to the graphic for the Bishop
 	 * @param color color for the Bishop

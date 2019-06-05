@@ -185,6 +185,8 @@ public class Settings extends JPanel implements ItemListener {
     /**
      * constructor
      * initializes usernames and settings menu options
+     * pre: none
+     * post: new settings menu created
      */
     public Settings() {
     	
@@ -212,6 +214,8 @@ public class Settings extends JPanel implements ItemListener {
     
     /**
      * updates the settings menu with the player names
+     * pre: players are players and settings is initialized
+     * post: players updated
      * @param whiteName white player name for menu
      * @param blackName black player name for menu
      */
@@ -222,6 +226,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * updates the main menu stats for the game
+     * pre: players valid
+     * post: values in display updated
      * @param winsWhite white players number of wins
      * @param percentWinsWhite white players number of wins as a percent
      * @param winsBlack black players number of wins
@@ -236,18 +242,24 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * retrieves the selected white player
+     * pre: player is not null (settings instantiated)
+     * post: none
      * @return the active white player
      */
     public static User getActiveWhitePlayer(){ return activeWhitePlayer; }
     
     /**
      * retrieves the selected black player
+     * pre: player is not null (settings instantiated)
+     * post: none
      * @return the active black player
      */
     public static User getActiveBlackPlayer(){ return activeBlackPlayer; }
 
     /**
      * initializes and reveals the window for selecting players
+     * pre: settings not null
+     * post: player select manu created & opened
      */
     private void initPlayerSelect(){
 
@@ -359,6 +371,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * updates selected player names in the player selection window after they are clicked
+     * pre: settings initialized
+     * post: text updated based on selected player
      */
     public void itemStateChanged(ItemEvent e) { 
         if (e.getSource() == whiteSelect) whiteMSG.setText("Selected White Player is " + whiteSelect.getSelectedItem());
@@ -367,6 +381,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * initializes and reveals the menu for creating a new player
+     * pre: settings initialized
+     * post: menu to create new player created and revealed
      */
     private void newPlayerMenu(){
         JFrame f = new JFrame();
@@ -426,6 +442,8 @@ public class Settings extends JPanel implements ItemListener {
     
     /**
      * initializes the main, settings menu components
+     * pre: none
+     * post: buttons & other functions configured
      */
     private void initMenuThings() {
     	JPanel selPlayerP = new JPanel(new FlowLayout());
@@ -540,6 +558,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * Method to play music
+     * pre: music file exists
+     * post: just listen
      */
     private void play() {
     	try {
@@ -556,11 +576,15 @@ public class Settings extends JPanel implements ItemListener {
     
     /**
      * Method that starts music
+     * pre: clip is not null
+     * post: listen
      */
     private void startMusic(Clip c) { c.start(); }
     
     /**
      * Method that stops music
+     * pre: clip is not null
+     * post: it all goes slient . . . 
      */
     private void stopMusic(Clip c) { c.stop(); }
 

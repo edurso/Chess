@@ -55,54 +55,72 @@ public class User extends Player implements Serializable{
 	
 	/**
 	 * created new player with {@code username}
-	 * @param username
+	 * pre: none
+	 * post: user created
+	 * @param username name of user
 	 */
 	public User (String username) { this.username = username; }
 
 	/**
 	 * retrieves the active white player
+	 * pre: player not null
+	 * post: none
 	 * @return the active white player
 	 */
 	public static String getActiveWhite() { return activeWhite; }
 
 	/**
 	 * sets the active white player
+	 * pre: player not null
+	 * post: player set
 	 * @param activeWhite player username of active white player
 	 */
 	public static void setActiveWhite(String activeWhite) { User.activeWhite = activeWhite; }
 
 	/**
 	 * retrieves the active black player
+	 * pre: player not null
+	 * post: none
 	 * @return the active black player
 	 */
 	public static String getActiveBlack() { return activeBlack; }
 
 	/**
 	 * sets the active black player
+	 * pre: player not null
+	 * post: player set
 	 * @param activeBlack player username of active black player
 	 */
 	public static void setActiveBlack(String activeBlack) { User.activeBlack = activeBlack; }
 
 	/**
 	 * retrieves the username of the player
+	 * pre: player not null
+	 * post: none
 	 * @return player's username
 	 */
 	public String getUsername() { return username; }
 
 	/**
 	 * sets the players username
+	 * pre: player not null
+	 * post: u-name set
 	 * @param username new username for player
 	 */
 	public void setUsername(String username) { this.username = username; }
 
 	/**
 	 * retrieves the number of games the player has played
-	 * @return
+	 * pre: player not null
+	 * post: none
+	 * @return the number of games played
 	 */
 	public int getGamesPlayed() { return gamesPlayed; }
 
 	/**
 	 * adds a game played, and a game won if the game was won by the player
+	 * pre: player not null
+	 * post: game added, win added if didWin
 	 * @param didWin weather or not the player won the game
 	 */
 	public void addGamePlayed(boolean didWin) {
@@ -112,12 +130,16 @@ public class User extends Player implements Serializable{
 
 	/**
 	 * retrieves the number of games the player has won
+	 * pre: player not null
+	 * post: none
 	 * @return number of games won by the player
 	 */
 	public String getGamesWon() { return ""+gamesWon; }
 	
 	/**
 	 * retrieves the percent of games the player has won
+	 * pre: player not null
+	 * post: none
 	 * @return player's won games as a percent
 	 */
 	public String getWinPercent() {
@@ -127,6 +149,8 @@ public class User extends Player implements Serializable{
 	
 	/**
 	 * saves all player data for current player only
+	 * pre: player not null
+	 * post: data saved
 	 */
 	public void savePlayerData() {
 		ObjectInputStream input = null;
@@ -184,6 +208,8 @@ public class User extends Player implements Serializable{
 	
 	/**
 	 * retrieves a list of all the players stored in the file
+	 * pre: none
+	 * post: players aquired from file or file created
 	 * @return list of saved players
 	 */
 	public static ArrayList<User> getPlayers() {

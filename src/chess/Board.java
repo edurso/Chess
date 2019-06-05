@@ -235,6 +235,8 @@ public class Board extends JFrame implements MouseListener{
 
 	/**
 	 * initializes board and pieces
+	 * pre: none
+	 * post: board is initialized with everything needed to play game
 	 * @param whitePlayer selected white player to play game
 	 * @param blackPlayer selected black player to play game
 	 */
@@ -446,11 +448,15 @@ public class Board extends JFrame implements MouseListener{
 	
 	/**
 	 * reveals the game board and allows the game to be played
+	 * pre: board object which calls this is not null
+	 * post: board is visible and playable
 	 */
 	public void play() { setVisible(true); }
 
 	/**
 	 * retrieves the king of the designated color
+	 * pre: kings are not null
+	 * post: king returned
 	 * @param color color of the king to be returned
 	 * @return the king of {@code color} 
 	 */
@@ -537,6 +543,8 @@ public class Board extends JFrame implements MouseListener{
 
 	/**
 	 * Alternate turn between players
+	 * pre: chance is a resonable number (0 or 1)
+	 * post: chance is changed to the other player
 	 */
 	public void changeChance() {
 		if (boardState[getKing(chance).getX()][getKing(chance).getY()].isCheck()) {
@@ -570,7 +578,9 @@ public class Board extends JFrame implements MouseListener{
 	}
 
 	/**
-	 * filters out moves that would put the king in danger
+	 * takes/moves pieces based on selected move
+	 * pre: list of destinations that suits the piece
+	 * post: removes pieces that are taken/moved
 	 * @param destinList list of possible destinations
 	 * @param fromSquare square from which move will be made
 	 * @return new list of destinations with those that harm the king out
@@ -601,6 +611,8 @@ public class Board extends JFrame implements MouseListener{
 
 	/**
 	 * determines if moving the piece on {@code fromSquare} to {@code toSquare} will harm the king
+	 * pre: to and from are not null and suit the piece
+	 * post: if the move endangers the king
 	 * @param fromSquare initial  square
 	 * @param toSquare square to which the king will be moved
 	 * @return true if the move will put the king in danger, false otherwise
@@ -620,6 +632,8 @@ public class Board extends JFrame implements MouseListener{
 
 	/**
 	 * removes all possible destinations from the list
+	 * pre: none
+	 * post: destinations are set to not visible
 	 * @param destinList list to reset destinations of
 	 */
 	private void clearDestinations(ArrayList<ChessSquare> destinList) {
@@ -629,6 +643,8 @@ public class Board extends JFrame implements MouseListener{
 	
 	/**
 	 * highlights possible destinations in list
+	 * pre: destin list is not null
+	 * post: destinations become visible
 	 * @param destinList list of possible destinations
 	 */
     private void showDestins(ArrayList<ChessSquare> destinList) {
@@ -638,6 +654,8 @@ public class Board extends JFrame implements MouseListener{
 
     /**
      * filters out destinations that would cause self-check
+	 * pre: nothing is null
+	 * post: moves that would cause self-check are removed
      * @param destinList list of destinations
      * @param fromSquare square from which move made
      * @param color color of mover
@@ -669,6 +687,8 @@ public class Board extends JFrame implements MouseListener{
 
 	/**
 	 * determines if chceckmate has happened
+	 * pre: color is 0 or 1
+	 * post: none really, checkmate happens
 	 * @param color to check if they are in check
 	 * @return true if {@code color} is in check, false otherwise
 	 */
@@ -689,6 +709,8 @@ public class Board extends JFrame implements MouseListener{
 
 	/**
 	 * run when game is terminated
+	 * pre: none
+	 * post: game is terminated
 	 */
 	public void gameEnd() {
 		String winMsg = "The ";
@@ -725,16 +747,22 @@ public class Board extends JFrame implements MouseListener{
 	
 	/**
 	 * reveals vistory window
+	 * pre: frame is not null
+	 * post: frame is visible
 	 */
 	public static void revealWinWindow() { winFrame.setVisible(true); }
 	
 	/**
 	 * hides victory window
+	 * pre: frame is not null
+	 * post: frame dies. (not visible)
 	 */
 	public static void killWinWindow() { winFrame.dispose(); }
 	
 	/**
 	 * initializes victory window with message {@code msg}
+	 * pre: someone won
+	 * post: win window visible
 	 * @param msg message for victory window
 	 */
 	private static void initWinWindow(String msg) {

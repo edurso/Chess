@@ -5,56 +5,36 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
+import java.net.*;
+import java.io.*;
+
 import chess.Game;
 
+//TODO - Javadoc
 public class OnlineMenu extends JFrame{
-
-    /**
-     * the menu
-     */
+	
+	protected final static int PORT = 6666;
+	
     static OnlineMenu menu;
 
-    /**
-     * main - attaches to frame & container for everything
-     */
     JPanel main;
 
-    /**
-     * Container for components involving join a game
-     */
     JPanel join;
 
-    /**
-     * container for components involving creating a new game
-     */
     JPanel create;
 
-    /**
-     * button to join
-     */
     JButton joinIt;
 
-    /**
-     * button to create game
-     */
     JButton createNew;
 
-    /**
-     * button to go back to the main menu
-     */
     JButton cancel;
 
-    /**
-     * address input box
-     */
-    JTextField joinAddress;
+    static JTextField joinAddress;
 
-    /**
-     * default connstructor sets everything up
-     */
     public OnlineMenu() {
         this.setVisible(false);
         this.setTitle("Chess Server Launch");
@@ -73,8 +53,11 @@ public class OnlineMenu extends JFrame{
                 /*
                 Stuff to start a new game somehow
                 */ 
-            } 
-        });
+            	dispose();
+        		Game.setErrorText("Loading Server  . . .  Hit Restart to Restart Application");
+        		Game.revealErrorWindow();
+        		Host.startServer();
+        }});
         cancel = new JButton("Cancel");
         cancel.setBackground(Color.RED);
         cancel.addActionListener(new ActionListener() { 
@@ -85,15 +68,18 @@ public class OnlineMenu extends JFrame{
         });
         joinIt = new JButton("Join Server");
         joinIt.setBackground(Color.RED);
-        joinAddress = new JTextField("Enter Address");
+        joinAddress = new JTextField();
+        joinAddress.setText("Enter Address");
         joinAddress.setBackground(Color.BLACK);
         joinAddress.setForeground(Color.RED);
         joinIt.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e) { 
-                /*
-                Stuff to take whatever is in joinAddress and pass it in to something to start game
-                */ 
-            } 
+        	public void actionPerformed(ActionEvent e) {
+        		/*
+        		Joins server  
+        		*/
+        		dispose();
+        		Client.joinServer();
+        	}
         });
         join.add(joinAddress);
         join.add(joinIt);
@@ -104,9 +90,6 @@ public class OnlineMenu extends JFrame{
         this.add(main);
     }
 
-    /**
-     * launches the menu
-     */
     public static void launch() {
         menu = new OnlineMenu();
         menu.setVisible(true);

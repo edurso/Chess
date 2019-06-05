@@ -34,6 +34,8 @@ public enum GameStyle {
 
 	/**
 	 * creates style with {@code value}
+	 * pre: none
+	 * post: style created
 	 * @param value
 	 */
     GameStyle(int value) {

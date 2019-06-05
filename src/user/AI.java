@@ -7,6 +7,10 @@ import chess.Game;
 import pieces.King;
 import pieces.Piece;
 
+/**
+ * supreme ai class. all singleplayer opponents delevoped off this
+ * @author edurso
+ */
 public abstract class AI extends Player {
 
 	/**
@@ -26,22 +30,32 @@ public abstract class AI extends Player {
 
 	/**
 	 * calculates piece to move
+	 * pre: ai not null & valid board state
+	 * post: from set
 	 * @param boardState current state of the board
 	 */
 	protected abstract void setFrom(ChessSquare[][] boardState);
 
 	/**
 	 * calculates destination square
+	 * pre: from is valid
+	 * post: to set
 	 * @param boardState current state of the board
 	 */
 	protected abstract void setTo(ChessSquare[][] boardState);
 
 	/**
 	 * selects the move
+	 * pre: ai not null and valid board state
 	 * @param boardState current state of the board
 	 */
 	public abstract void selectMove(ChessSquare[][] boardState);
 
+	/**
+	 * moves the piece
+	 * pre: valid move and state
+	 * post: state updated with move
+	 */
 	public void move(ChessSquare[][] boardState){
 		selectMove(boardState);
 		updatePieces(boardState, from, to);
@@ -50,6 +64,8 @@ public abstract class AI extends Player {
 	//TODO - check filters & logic here
 	/**
 	 * updates the selected pieces based on the selected move
+	 * pre: ai not null & valid state w/ move
+	 * post: piece positions updated
 	 * @param boardState current state of the board
 	 * @param from square containing the piece to be moved
 	 * @param to destination square

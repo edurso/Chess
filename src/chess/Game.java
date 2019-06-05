@@ -61,6 +61,8 @@ public class Game {
 	
 	/**
 	 * runs the game of the specified {@code style}
+	 * pre: instance is not null
+	 * post:  game is running
 	 * @param style style in which to run the game
 	 */
 	public static void run(GameStyle style) {
@@ -87,16 +89,22 @@ public class Game {
 	
 	/**
 	 * shows the error window and error
+	 * pre: frame is not null
+	 * post: frame is visible
 	 */
 	public static void revealErrorWindow() { errorFrame.setVisible(true); }
 	
 	/**
 	 * removes the error window
+	 * pre: frame is not null
+	 * post: frame killed
 	 */
 	public static void killErrorWindow() { errorFrame.dispose(); }
 	
 	/**
 	 * initializes the error window with a default message
+	 * pre: instance not null
+	 * post: window not null
 	 */
 	private static void initErrorWindow() {
 		errorFrame = new JFrame();
@@ -126,6 +134,8 @@ public class Game {
 	
 	/**
 	 * sets the text in the error window to the specified {@code msg}
+	 * pre: text not null
+	 * post: text set to msg
 	 * @param msg error message to show
 	 */
 	public static void setErrorText(String msg) { errorText.setText(msg); }

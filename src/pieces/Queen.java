@@ -12,6 +12,8 @@ public class Queen extends Piece {
 	
 	/**
 	 * constructor for the Queen class
+	 * pre: none
+	 * post: queen created
 	 * @param id    id for the Queen
 	 * @param path  path to the graphic for the Queen
 	 * @param color color for the Queen
