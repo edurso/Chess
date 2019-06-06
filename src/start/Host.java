@@ -32,7 +32,7 @@ public class Host{
 //    		System.out.println("IT WORKED");
     		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
     		String temp;
-    		while((temp = in.readLine())!= null) {
+    		while((temp = in.readLine()) != null) {
     			System.out.println(temp);
     		}
     		server.close();

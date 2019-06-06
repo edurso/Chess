@@ -183,6 +183,11 @@ public class Settings extends JPanel implements ItemListener {
     private JButton back;
 
     /**
+     * button will serve to stop the music
+     */
+    private JButton stopMusic;
+
+    /**
      * constructor
      * initializes usernames and settings menu options
      * pre: none
@@ -462,6 +467,13 @@ public class Settings extends JPanel implements ItemListener {
         music.setForeground(Color.RED);
         music.setFont(Menu.f);
         music.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {play();}});
+
+        stopMusic = new JButton("Disable Music");
+		stopMusic.setBounds(450,600,100,50);
+        stopMusic.setBackground(Color.BLACK);
+        stopMusic.setForeground(Color.RED);
+        stopMusic.setFont(Menu.f);
+        stopMusic.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) { noMusic(); } });
         
         whiteDubs = new JTextField();
         whiteDubs.setEditable(false);
@@ -539,6 +551,7 @@ public class Settings extends JPanel implements ItemListener {
         musicPanel = new JPanel(new FlowLayout());
         musicPanel.setBackground(Color.RED);
         musicPanel.add(music);
+        musicPanel.add(stopMusic);
         
         JPanel goHome = new JPanel();
         goHome.setBackground(Color.RED);
@@ -557,21 +570,39 @@ public class Settings extends JPanel implements ItemListener {
     }
 
     /**
+     * so we dont play too much noises . . . 
+     */
+    private int inc = 0;
+
+    /**
      * Method to play music
      * pre: music file exists
      * post: just listen
      */
     private void play() {
-    	try {
-    		clip = AudioSystem.getClip();
-    		clip.open(AudioSystem.getAudioInputStream(getClass().getResource("music.wav")));
-    		clip.loop(Clip.LOOP_CONTINUOUSLY);
-    	} catch(Exception e) {
-            Game.setErrorText("error finding music file");
-            Game.revealErrorWindow();
-    	}
-    	if(clip.isRunning()) stopMusic(clip);
-    	else startMusic(clip);    	
+        if(inc == 0){
+            try {
+    		    clip = AudioSystem.getClip();
+    		    clip.open(AudioSystem.getAudioInputStream(getClass().getResource("music.wav")));
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                inc++;
+    	    } catch(Exception e) {
+                Game.setErrorText("error finding music file");
+                Game.revealErrorWindow();
+    	    }
+    	    if(clip.isRunning()) stopMusic(clip);
+            else startMusic(clip);    
+        }	
+    }
+
+    /**
+     * turns off that music boi
+     * pre: settings and music exist
+     * post: noises have stopped
+     */
+    private void noMusic() { 
+        clip.stop();
+        inc--; 
     }
     
     /**
