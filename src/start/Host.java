@@ -26,21 +26,26 @@ public class Host{
 	private static BufferedReader in;
 	
 	public static void startServer() {
-		try {
-    		server = new ServerSocket(6666);
-    		s = server.accept();
-//    		System.out.println("IT WORKED");
-    		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+ 		try { server = new ServerSocket(6666); } catch(IOException io) { io.printStackTrace(); }
+   		try { s = server.accept();/* problem here */ } catch (IOException e1) { e1.printStackTrace(); }
+    		try {
+			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     		String temp;
-    		while((temp = in.readLine()) != null) {
-    			System.out.println(temp);
-    		}
-    		server.close();
+    		try {
+			while ((temp = in.readLine()) != null) {
+				System.out.println(temp);
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+     	try { server.close(); } catch (IOException e) { e.printStackTrace(); }
     		
-    	}
-    	catch(IOException io) {
-    		io.printStackTrace();
-    	}
+     	
     } 
 }
 
