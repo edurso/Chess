@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
@@ -31,8 +32,13 @@ import pieces.*;
  * Class sets up and runs board game. Also contains methods for checking piece conditions
  * @author edurso
  */
-public class Board extends JFrame implements MouseListener{
+public class Board extends JFrame implements MouseListener,Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Stores current state of the board
 	 */

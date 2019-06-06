@@ -5,13 +5,19 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
+
+import java.net.*;
+import java.io.*;
 
 import chess.Game;
 
 public class OnlineMenu extends JFrame{
-
+	
+	protected final static int PORT = 6666;
+	
     static OnlineMenu menu;
 
     JPanel main;
@@ -26,7 +32,7 @@ public class OnlineMenu extends JFrame{
 
     JButton cancel;
 
-    JTextField joinAddress;
+    static JTextField joinAddress;
 
     public OnlineMenu() {
         this.setVisible(false);
@@ -46,8 +52,11 @@ public class OnlineMenu extends JFrame{
                 /*
                 Stuff to start a new game somehow
                 */ 
-            } 
-        });
+            	dispose();
+        		Game.setErrorText("Loading Server  . . .  Hit Restart to Restart Application");
+        		Game.revealErrorWindow();
+        		Host.startServer();
+        }});
         cancel = new JButton("Cancel");
         cancel.setBackground(Color.RED);
         cancel.addActionListener(new ActionListener() { 
@@ -58,15 +67,18 @@ public class OnlineMenu extends JFrame{
         });
         joinIt = new JButton("Join Server");
         joinIt.setBackground(Color.RED);
-        joinAddress = new JTextField("Enter Address");
+        joinAddress = new JTextField();
+        joinAddress.setText("Enter Address");
         joinAddress.setBackground(Color.BLACK);
         joinAddress.setForeground(Color.RED);
         joinIt.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e) { 
-                /*
-                Stuff to take whatever is in joinAddress and pass it in to something to start game
-                */ 
-            } 
+        	public void actionPerformed(ActionEvent e) {
+        		/*
+        		Joins server  
+        		*/
+        		dispose();
+        		Client.joinServer();
+        	}
         });
         join.add(joinAddress);
         join.add(joinIt);
