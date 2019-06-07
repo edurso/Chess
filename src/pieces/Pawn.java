@@ -12,6 +12,8 @@ public class Pawn extends Piece {
 	
 	/**
 	 * constructor for the Pawn class
+	 * pre: none
+	 * post: pawn created
 	 * @param id    id for the Pawn
 	 * @param path  path to the graphic for the Pawn
 	 * @param color color for the Pawn

@@ -183,8 +183,15 @@ public class Settings extends JPanel implements ItemListener {
     private JButton back;
 
     /**
+     * button will serve to stop the music
+     */
+    private JButton stopMusic;
+
+    /**
      * constructor
      * initializes usernames and settings menu options
+     * pre: none
+     * post: new settings menu created
      */
     public Settings() {
     	
@@ -202,11 +209,7 @@ public class Settings extends JPanel implements ItemListener {
             whiteUsrNames.add(p.getUsername());
             blackUsrNames.add(p.getUsername());
         }
-        
-//        String s = Player.getActiveBlack();
-//        if(s!=null && s.length()!=0)System.out.println(s);
-//        else System.out.println("its null bro");
-        
+
         activeBlackPlayer = players.get(User.getActiveBlack());
         activeWhitePlayer = players.get(User.getActiveWhite());
         
@@ -216,6 +219,8 @@ public class Settings extends JPanel implements ItemListener {
     
     /**
      * updates the settings menu with the player names
+     * pre: players are players and settings is initialized
+     * post: players updated
      * @param whiteName white player name for menu
      * @param blackName black player name for menu
      */
@@ -226,6 +231,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * updates the main menu stats for the game
+     * pre: players valid
+     * post: values in display updated
      * @param winsWhite white players number of wins
      * @param percentWinsWhite white players number of wins as a percent
      * @param winsBlack black players number of wins
@@ -240,18 +247,24 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * retrieves the selected white player
+     * pre: player is not null (settings instantiated)
+     * post: none
      * @return the active white player
      */
     public static User getActiveWhitePlayer(){ return activeWhitePlayer; }
     
     /**
      * retrieves the selected black player
+     * pre: player is not null (settings instantiated)
+     * post: none
      * @return the active black player
      */
     public static User getActiveBlackPlayer(){ return activeBlackPlayer; }
 
     /**
      * initializes and reveals the window for selecting players
+     * pre: settings not null
+     * post: player select manu created & opened
      */
     private void initPlayerSelect(){
 
@@ -363,6 +376,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * updates selected player names in the player selection window after they are clicked
+     * pre: settings initialized
+     * post: text updated based on selected player
      */
     public void itemStateChanged(ItemEvent e) { 
         if (e.getSource() == whiteSelect) whiteMSG.setText("Selected White Player is " + whiteSelect.getSelectedItem());
@@ -371,6 +386,8 @@ public class Settings extends JPanel implements ItemListener {
 
     /**
      * initializes and reveals the menu for creating a new player
+     * pre: settings initialized
+     * post: menu to create new player created and revealed
      */
     private void newPlayerMenu(){
         JFrame f = new JFrame();
@@ -430,6 +447,8 @@ public class Settings extends JPanel implements ItemListener {
     
     /**
      * initializes the main, settings menu components
+     * pre: none
+     * post: buttons & other functions configured
      */
     private void initMenuThings() {
     	JPanel selPlayerP = new JPanel(new FlowLayout());
@@ -448,6 +467,13 @@ public class Settings extends JPanel implements ItemListener {
         music.setForeground(Color.RED);
         music.setFont(Menu.f);
         music.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {play();}});
+
+        stopMusic = new JButton("Disable Music");
+		stopMusic.setBounds(450,600,100,50);
+        stopMusic.setBackground(Color.BLACK);
+        stopMusic.setForeground(Color.RED);
+        stopMusic.setFont(Menu.f);
+        stopMusic.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) { noMusic(); } });
         
         whiteDubs = new JTextField();
         whiteDubs.setEditable(false);
@@ -525,6 +551,7 @@ public class Settings extends JPanel implements ItemListener {
         musicPanel = new JPanel(new FlowLayout());
         musicPanel.setBackground(Color.RED);
         musicPanel.add(music);
+        musicPanel.add(stopMusic);
         
         JPanel goHome = new JPanel();
         goHome.setBackground(Color.RED);
@@ -543,39 +570,53 @@ public class Settings extends JPanel implements ItemListener {
     }
 
     /**
+     * so we dont play too much noises . . . 
+     */
+    private int inc = 0;
+
+    /**
      * Method to play music
+     * pre: music file exists
+     * post: just listen
      */
     private void play() {
-    	//count++;
-    	try {
-    		clip = AudioSystem.getClip();
-    		clip.open(AudioSystem.getAudioInputStream(new File("src/start/music.wav")));
-    		clip.loop(Clip.LOOP_CONTINUOUSLY);
-    	}
-    	catch(Exception e) {
-    		e.printStackTrace();
-    	}
-    	if(clip.isRunning()) {
-    		stopMusic(clip);
-    	}
-    	else {
-    		startMusic(clip);
-    	}
-    	
+        if(inc == 0){
+            try {
+    		    clip = AudioSystem.getClip();
+    		    clip.open(AudioSystem.getAudioInputStream(getClass().getResource("music.wav")));
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                inc++;
+    	    } catch(Exception e) {
+                Game.setErrorText("error finding music file");
+                Game.revealErrorWindow();
+    	    }
+    	    if(clip.isRunning()) stopMusic(clip);
+            else startMusic(clip);    
+        }	
+    }
+
+    /**
+     * turns off that music boi
+     * pre: settings and music exist
+     * post: noises have stopped
+     */
+    private void noMusic() { 
+        clip.stop();
+        inc--; 
     }
     
     /**
      * Method that starts music
+     * pre: clip is not null
+     * post: listen
      */
-    private void startMusic(Clip c) {
-    	c.start();
-    }
+    private void startMusic(Clip c) { c.start(); }
     
     /**
      * Method that stops music
+     * pre: clip is not null
+     * post: it all goes slient . . . 
      */
-    private void stopMusic(Clip c) {
-    	c.stop();
-    }
+    private void stopMusic(Clip c) { c.stop(); }
 
 }

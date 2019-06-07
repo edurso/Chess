@@ -90,6 +90,8 @@ public class Menu extends JFrame{
     
     /**
      * Starts the menu at the main screen of the application
+	 * pre: none
+	 * post: menu initialized with buttons and things
      */
 	public void start() {
 		
@@ -122,18 +124,24 @@ public class Menu extends JFrame{
 	
 	/**
 	 * gets active players from the list of players
+	 * pre: none
+	 * post: none
 	 * @return the player who is playing on the white side
 	 */
 	public static User getActiveWhitePlayer() { return Settings.getActiveWhitePlayer(); }
 	
 	/**
 	 * gets active players from the list of players
+	 * pre: none
+	 * post: none
 	 * @return the player who is playing on the black side
 	 */
 	public static User getActiveBlackPlayer() { return Settings.getActiveBlackPlayer(); }
 	
 	/**
 	 * Configures the components for the main menu
+	 * pre: none
+	 * post: buttons for main menu created
 	 */
 	private void initMainMenuButtons() {
 
@@ -202,6 +210,8 @@ public class Menu extends JFrame{
 
 	/**
 	 * Configures the components for the settings menu
+	 * pre: none
+	 * post: settings menu created
 	 */
 	private void initSettingsButtons() {
 		settings.setBounds(0, 150, 500, 452);
@@ -214,6 +224,8 @@ public class Menu extends JFrame{
 	
 	/**
 	 * Configures the components for the multiplayer menu
+	 * pre: none
+	 * post: multiplayer menu buttons created and shown
 	 */
 	private void initMultiplayerButtons() {
 		
@@ -247,6 +259,8 @@ public class Menu extends JFrame{
 	
 	/**
 	 * Adds a "go home" button to the inputed panel.
+	 * pre: panel is not null
+	 * post: back button added
 	 * @param panel the panel the home button will be added to
 	 */
 	private void addBack(JPanel panel) {
@@ -260,6 +274,8 @@ public class Menu extends JFrame{
 	
 	/**
 	 * Redirects to the main menu of the application
+	 * pre: frame is not null
+	 * post: redirected to main menu
 	 */
 	protected void goToHome() {
 		setVisible(false);

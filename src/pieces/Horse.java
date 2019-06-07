@@ -12,6 +12,8 @@ public class Horse extends Piece {
 	
 	/**
 	 * constructor for the Horse class
+	 * pre: none
+	 * post: horse created
 	 * @param id    id for the Horse
 	 * @param path  path to the graphic for the Horse
 	 * @param color color for the Horse

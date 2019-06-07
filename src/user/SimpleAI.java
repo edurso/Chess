@@ -11,6 +11,10 @@ import pieces.Piece;
 //TODO - second time it does not play properly.
 //TODO - it declares loss on check i think - pls fix
 //TODO - need to stop it from replacing its own pieces - filtering destinations might help
+/**
+ * makes random moves 
+ * @author edurso
+ */
 public class SimpleAI extends AI {
 	
 	@Override

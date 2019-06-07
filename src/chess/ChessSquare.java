@@ -51,6 +51,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * constructor for the chess square
+	 * pre: none
+	 * post: chess square exists with things
 	 * @param x x position of the square on the board
 	 * @param y y position of the square on the board
 	 * @param p piece on the square
@@ -71,8 +73,10 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * constructor to create a chess square from an existing chess square
+	 * pre: chess square exists
+	 * post:chess square cloned
 	 * @param cs ChessSquare to base creation of new square from
-	 * @throws CloneNotSupportedException
+	 * @throws CloneNotSupportedException can throw a clone not supported exception in some rare cases
 	 */
 	public ChessSquare(ChessSquare cs) throws CloneNotSupportedException {
 		this.x = cs.x;
@@ -89,6 +93,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * sets the piece on the square
+	 * pre: square is not null
+	 * post: piece added to square
 	 * @param piece piece to add to square
 	 */
 	public void setPiece(Piece piece) {
@@ -101,12 +107,16 @@ public class ChessSquare extends JPanel implements Cloneable{
 	}
 	
 	/** 
+	 * pre: piece should not be null
+	 * post: none
 	 * @return the piece on the square
 	 */
 	public Piece getPiece() { return this.piece; }
 	
 	/**
 	 * removes the piece on the square
+	 * pre: there is a piece on the square
+	 * post: there is not a piece on the square
 	 */
 	public void removePiece() {
 		if (piece instanceof King) {
@@ -124,6 +134,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * selcets the square
+	 * pre: square is not null
+	 * post: borders highlighted
 	 */
 	public void select() {
 		this.setBorder(BorderFactory.createLineBorder(Color.red, 6));
@@ -131,12 +143,16 @@ public class ChessSquare extends JPanel implements Cloneable{
 	}
 	
 	/**
+	 * pre: none
+	 * post: none
 	 * @return true if the square is selected, false otherwise
 	 */
 	public boolean isSelected() { return this.isSelected; }
 	
 	/**
 	 * removes the border from the square to indicate that it is no longer selected
+	 * pre: chess square exists
+	 * post: chess square returned to normal state
 	 */
 	public void deselect() {
 		this.setBorder(null);
@@ -145,6 +161,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * sets the square as a possible destination (border color changes to blue)
+	 * pre: square exists
+	 * post: possibe destination highlighted and labeled
 	 */
 	public void setPossibleDestination() {
 		this.setBorder(BorderFactory.createLineBorder(Color.blue, 4));
@@ -153,6 +171,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * removes blue border from square o indicate the square is no longer selected
+	 * pre: square exists
+	 * post: highlight and label removed
 	 */
 	public void setImpossibleDestination() {
 		this.setBorder(null);
@@ -160,12 +180,16 @@ public class ChessSquare extends JPanel implements Cloneable{
 	}
 	
 	/**
+	 * pre: square exists
+	 * post: square is possible destination
 	 * @return true if the square is a possible destination, false otherwise
 	 */
 	public boolean isPossibleDestination() { return this.isPossibleDestination; }
 	
 	/**
 	 * sets the border color of a cell to indicate check
+	 * pre: square exists
+	 * post: check marked and labeled
 	 */
 	public void setCheck() {
 		this.setBackground(Color.RED);
@@ -174,6 +198,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	
 	/**
 	 * removes the red border color of a cell to indicate the cell is no longer involved in check
+	 * pre: square exists
+	 * post: coloration and label removed
 	 */
 	public void removeCheck() {
 		this.setBorder(null);
@@ -183,6 +209,8 @@ public class ChessSquare extends JPanel implements Cloneable{
 	}
 	
 	/**
+	 * pre: square exists
+	 * post: none
 	 * @return if the cell is in check
 	 */
 	public boolean isCheck(){ return isCheck; }

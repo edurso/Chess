@@ -27,6 +27,8 @@ public class King extends Piece {
 	
 	/**
 	 * King constructor
+	 * pre: none
+	 * post: king created and initialized
 	 * @param id    kings ID
 	 * @param path  path to kings graphic  
 	 * @param color color of king
@@ -44,22 +46,30 @@ public class King extends Piece {
 	
 	/**
 	 * sets x position of king
+	 * pre: king not null
+	 * post: x updated
 	 * @param x new X position
 	 */
 	public void setX(int x) { this.x = x; }
 	
 	/**
 	 * sets y position of king
+	 * pre: king not null
+	 * post: y updated
 	 * @param y new Y position
 	 */
 	public void setY(int y) { this.y = y; }
 	
 	/**
+	 * pre: king not null
+	 * post: none
 	 * @return the x position of king
 	 */
 	public int getX() { return x; }
 	
 	/**
+	 * pre: king not null
+	 * post: none
 	 * @return the y position of king
 	 */
 	public int getY() { return y; }
@@ -82,6 +92,8 @@ public class King extends Piece {
 	
 	/**
 	 * determines if the king is in check
+	 * pre: king not null, board state valid
+	 * post: none
 	 * @param currentBoardState the current state of the board
 	 * @return true if an opposing piece is able to capture the king, false otherwise
 	 */
@@ -94,6 +106,8 @@ public class King extends Piece {
 	
 	/**
 	 * determined if an attack is possible from above, below, or on either side of the king
+	 * pre: king not null, board state valid
+	 * post: none
 	 * @param currentBoardState the current state of the board
 	 * @return true if an opposing queen or rook is able to capture the king, false otherwise
 	 */
@@ -134,8 +148,8 @@ public class King extends Piece {
     		}
     	}
     	for(int i = y - 1 ; i >= 0 ; i--) {
-    		if(currentBoardState[x][i].getPiece()==null) continue;
-    		else if(currentBoardState[x][i].getPiece().getColor()==this.getColor()) break;
+    		if(currentBoardState[x][i].getPiece() == null) continue;
+    		else if(currentBoardState[x][i].getPiece().getColor() == this.getColor()) break;
     		else
     		{
     			if ((currentBoardState[x][i].getPiece() instanceof Castle) 
@@ -149,6 +163,8 @@ public class King extends Piece {
 	
 	/**
 	 * determines if a pawn from the opposing side is in position to take the king
+	 * pre: king not null, board state valid
+	 * post: none
 	 * @param currentBoardState the current state of the board
 	 * @return true if an opposing pawn is in position to take the king, false otherwise
 	 */
@@ -190,6 +206,8 @@ public class King extends Piece {
 	
 	/**
 	 * determines if an opposing piece that moves on a diagonal axis is able to take the king
+	 * pre: king not null, board state valid
+	 * post: none
 	 * @param currentBoardState the current state of the board
 	 * @return true if an opposing queen or bishop is able to take the king, false otherwise
 	 */
@@ -260,6 +278,8 @@ public class King extends Piece {
 	
 	/**
 	 * determines if an opposing knight is able to take the king
+	 * pre: king not null, board state valid
+	 * post: none
 	 * @param currentBoardState the current state of the board
 	 * @return true if an opposing knight is in position o take the king, false otherwise
 	 */
