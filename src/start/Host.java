@@ -7,11 +7,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import chess.Board;
 import chess.Game;
 
-public class Host{
+public class Host extends Thread{
 	
 	/**
 	 * Server socket that allows the client to establish a connection
@@ -30,12 +31,22 @@ public class Host{
 	 */
 	private static Socket s;
 
-	/**
-	 * A bufferedreader that allows the server to grab information that the client sends
-	 */
 	private static ObjectOutputStream out;
-	
+
 	private static ObjectInputStream in;
+	
+	public void run() {
+		try {
+			s = server.accept();
+			out = new ObjectOutputStream(s.getOutputStream());
+			in = new ObjectInputStream(s.getInputStream());
+			Thread.currentThread().join();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public static void startServer() {
 		try {
@@ -45,42 +56,48 @@ public class Host{
 			e.printStackTrace();
 		}
     } 
-	public void sendBoard(Board b) {
+	public void sendInfo(Board b) {
 		try {
 			if(s.isConnected()) {
-				out = new ObjectOutputStream(s.getOutputStream());
 				out.writeObject(b);
-				
+				out.writeObject(Settings.getActiveWhitePlayer());
 			}
 			
 		}
 		catch(IOException io) {
 			io.printStackTrace();
+			closeResources();
 		}
 		catch(NullPointerException nulle) {
 			nulle.printStackTrace();
+			closeResources();
 		}
 		catch(Exception e) {
 			System.out.println("An unknown error occured");
 			e.printStackTrace();
+			closeResources();
 		}
 	}
-	public Board recieveBoard() {
+	public ArrayList<Object> recieveBoard() {
+		ArrayList<Object> obj = new <Object>ArrayList();
 		try {
 			if(s.isConnected()) {
-				in = new ObjectInputStream(s.getInputStream());
-				return (Board)(in.readObject());
+				obj.add(in.readObject());
+				obj.add(in.readObject());
 			}
 		}
 		catch(IOException io) {
 			io.printStackTrace();
+			closeResources();
 		}
 		catch(NullPointerException nulle) {
 			nulle.printStackTrace();
+			closeResources();
 		}
 		catch(Exception e) {
 			System.out.println("An unknown error occured");
 			e.printStackTrace();
+			closeResources();
 		}
 		return null;
 	}
@@ -93,6 +110,7 @@ public class Host{
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			closeResources();
 		}
 	}
 }

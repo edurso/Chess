@@ -32,9 +32,13 @@ public class OnlineMenu extends JFrame{
 
     JButton cancel;
 
-    static JTextField joinAddress;
+    private static JTextField joinAddress;
 
-    public OnlineMenu() {
+    public static JTextField getJoinAddress() { return joinAddress; }
+
+	public static void setJoinAddress(JTextField joinAddress) { OnlineMenu.joinAddress = joinAddress; }
+
+	public OnlineMenu() {
         this.setVisible(false);
         this.setTitle("Chess Server Launch");
         main = new JPanel(new GridLayout(2, 1));
@@ -77,7 +81,8 @@ public class OnlineMenu extends JFrame{
         		Joins server  
         		*/
         		dispose();
-        		Client.joinServer();
+        		Client.var();
+        		
         	}
         });
         join.add(joinAddress);
