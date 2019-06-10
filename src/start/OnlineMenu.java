@@ -16,6 +16,11 @@ import chess.Board;
 import chess.Game;
 
 //TODO - Javadoc
+/**
+ * Class for the online menu player selection
+ * @author edurso
+ * @deprecated
+ */
 public class OnlineMenu extends JFrame {
 
     protected final static int PORT = 6666;

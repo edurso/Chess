@@ -30,7 +30,7 @@ public abstract class AI extends Player {
 
 	/**
 	 * calculates piece to move
-	 * pre: ai not null & valid board state
+	 * pre: ai not null and valid board state
 	 * post: from set
 	 * @param boardState current state of the board
 	 */
@@ -64,7 +64,7 @@ public abstract class AI extends Player {
 	//TODO - check filters & logic here
 	/**
 	 * updates the selected pieces based on the selected move
-	 * pre: ai not null & valid state w/ move
+	 * pre: ai not null and valid state w/ move
 	 * post: piece positions updated
 	 * @param boardState current state of the board
 	 * @param from square containing the piece to be moved

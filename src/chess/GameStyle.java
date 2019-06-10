@@ -36,7 +36,7 @@ public enum GameStyle {
 	 * creates style with {@code value}
 	 * pre: none
 	 * post: style created
-	 * @param value
+	 * @param value val of the style
 	 */
     GameStyle(int value) {
         this.value = value;

@@ -264,7 +264,7 @@ public class Settings extends JPanel implements ItemListener {
     /**
      * initializes and reveals the window for selecting players
      * pre: settings not null
-     * post: player select manu created & opened
+     * post: player select manu created and opened
      */
     private void initPlayerSelect(){
 
@@ -448,7 +448,7 @@ public class Settings extends JPanel implements ItemListener {
     /**
      * initializes the main, settings menu components
      * pre: none
-     * post: buttons & other functions configured
+     * post: buttons and other functions configured
      */
     private void initMenuThings() {
     	JPanel selPlayerP = new JPanel(new FlowLayout());
@@ -601,14 +601,17 @@ public class Settings extends JPanel implements ItemListener {
      * post: noises have stopped
      */
     private void noMusic() { 
-        clip.stop();
-        inc--; 
+        if(inc > 0) {
+        	inc--; 
+            clip.stop();
+        }
     }
     
     /**
      * Method that starts music
      * pre: clip is not null
      * post: listen
+     * @param c clip to start
      */
     private void startMusic(Clip c) { c.start(); }
     
@@ -616,6 +619,7 @@ public class Settings extends JPanel implements ItemListener {
      * Method that stops music
      * pre: clip is not null
      * post: it all goes slient . . . 
+     * @param c clip to stop
      */
     private void stopMusic(Clip c) { c.stop(); }
 
