@@ -79,7 +79,10 @@ public class Game {
 				board.play();
 				break;
 			case MULTI_ONLINE:
-				OnlineMenu.launch();
+				//OnlineMenu.launch();
+				initErrorWindow();
+				setErrorText("Coming Soon in Version 1.2!");
+				revealErrorWindow();
 				break;
 			default:
 				errorFrame.setVisible(true);
